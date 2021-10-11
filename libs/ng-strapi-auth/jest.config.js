@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'strapi-auth-test',
+  displayName: 'ng-strapi-auth',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/strapi-auth-test',
+  coverageDirectory: '../../coverage/libs/ng-strapi-auth',
   transform: {
     '^.+\\.(ts|js|html)$': 'jest-preset-angular',
   },

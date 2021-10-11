@@ -27,12 +27,15 @@
     ]
   },
   "projects": {
-    "strapi-auth-test": {
+    "ng-strapi-auth": {
       "tags": []
     },
-    "strapi-auth-test-e2e": {
+    "strapi-auth-demo": {
+      "tags": []
+    },
+    "strapi-auth-demo-e2e": {
       "tags": [],
-      "implicitDependencies": ["strapi-auth-test"]
+      "implicitDependencies": ["strapi-auth-demo"]
     }
   }
 }

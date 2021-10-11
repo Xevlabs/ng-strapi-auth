@@ -1,27 +1,52 @@
 {
   "version": 1,
   "projects": {
-    "strapi-auth-test": {
+    "ng-strapi-auth": {
+      "projectType": "library",
+      "root": "libs/ng-strapi-auth",
+      "sourceRoot": "libs/ng-strapi-auth/src",
+      "prefix": "ng-strapi-auth",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ng-strapi-auth"],
+          "options": {
+            "jestConfig": "libs/ng-strapi-auth/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ng-strapi-auth/src/**/*.ts",
+              "libs/ng-strapi-auth/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "strapi-auth-demo": {
       "projectType": "application",
-      "root": "apps/strapi-auth-test",
-      "sourceRoot": "apps/strapi-auth-test/src",
+      "root": "apps/strapi-auth-demo",
+      "sourceRoot": "apps/strapi-auth-demo/src",
       "prefix": "ng-strapi-auth",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/strapi-auth-test",
-            "index": "apps/strapi-auth-test/src/index.html",
-            "main": "apps/strapi-auth-test/src/main.ts",
-            "polyfills": "apps/strapi-auth-test/src/polyfills.ts",
-            "tsConfig": "apps/strapi-auth-test/tsconfig.app.json",
+            "outputPath": "dist/apps/strapi-auth-demo",
+            "index": "apps/strapi-auth-demo/src/index.html",
+            "main": "apps/strapi-auth-demo/src/main.ts",
+            "polyfills": "apps/strapi-auth-demo/src/polyfills.ts",
+            "tsConfig": "apps/strapi-auth-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "apps/strapi-auth-test/src/favicon.ico",
-              "apps/strapi-auth-test/src/assets"
+              "apps/strapi-auth-demo/src/favicon.ico",
+              "apps/strapi-auth-demo/src/assets"
             ],
-            "styles": ["apps/strapi-auth-test/src/styles.scss"],
+            "styles": ["apps/strapi-auth-demo/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -40,8 +65,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "apps/strapi-auth-test/src/environments/environment.ts",
-                  "with": "apps/strapi-auth-test/src/environments/environment.prod.ts"
+                  "replace": "apps/strapi-auth-demo/src/environments/environment.ts",
+                  "with": "apps/strapi-auth-demo/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -61,10 +86,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "strapi-auth-test:build:production"
+              "browserTarget": "strapi-auth-demo:build:production"
             },
             "development": {
-              "browserTarget": "strapi-auth-test:build:development"
+              "browserTarget": "strapi-auth-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -72,43 +97,43 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "strapi-auth-test:build"
+            "browserTarget": "strapi-auth-demo:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/strapi-auth-test/src/**/*.ts",
-              "apps/strapi-auth-test/src/**/*.html"
+              "apps/strapi-auth-demo/src/**/*.ts",
+              "apps/strapi-auth-demo/src/**/*.html"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/strapi-auth-test"],
+          "outputs": ["coverage/apps/strapi-auth-demo"],
           "options": {
-            "jestConfig": "apps/strapi-auth-test/jest.config.js",
+            "jestConfig": "apps/strapi-auth-demo/jest.config.js",
             "passWithNoTests": true
           }
         }
       }
     },
-    "strapi-auth-test-e2e": {
-      "root": "apps/strapi-auth-test-e2e",
-      "sourceRoot": "apps/strapi-auth-test-e2e/src",
+    "strapi-auth-demo-e2e": {
+      "root": "apps/strapi-auth-demo-e2e",
+      "sourceRoot": "apps/strapi-auth-demo-e2e/src",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/strapi-auth-test-e2e/cypress.json",
-            "devServerTarget": "strapi-auth-test:serve:development",
-            "tsConfig": "apps/strapi-auth-test-e2e/tsconfig.json"
+            "cypressConfig": "apps/strapi-auth-demo-e2e/cypress.json",
+            "devServerTarget": "strapi-auth-demo:serve:development",
+            "tsConfig": "apps/strapi-auth-demo-e2e/tsconfig.json"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "strapi-auth-test:serve:production"
+              "devServerTarget": "strapi-auth-demo:serve:production"
             }
           }
         },
@@ -116,7 +141,7 @@
           "builder": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": ["apps/strapi-auth-test-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": ["apps/strapi-auth-demo-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -153,5 +178,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "strapi-auth-test"
+  "defaultProject": "strapi-auth-demo"
 }

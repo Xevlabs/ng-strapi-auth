@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 
-describe('strapi-auth-test', () => {
+describe('strapi-auth-demo', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {
@@ -8,6 +8,6 @@ describe('strapi-auth-test', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to strapi-auth-test!');
+    getGreeting().contains('Welcome to strapi-auth-demo!');
   });
 });

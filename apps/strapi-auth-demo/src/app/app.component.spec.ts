@@ -14,10 +14,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'strapi-auth-test'`, () => {
+  it(`should have as title 'strapi-auth-demo'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('strapi-auth-test');
+    expect(app.title).toEqual('strapi-auth-demo');
   });
 
   it('should render title', () => {
@@ -25,7 +25,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome to strapi-auth-test!'
+      'Welcome to strapi-auth-demo!'
     );
   });
 });
