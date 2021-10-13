@@ -1,0 +1,8 @@
+{
+    "TEST_PAGE": {
+        "TEST_DESC": "This is a test page for the basic strapi auth requests. The backend needs to be run locally and cloned and a user must be added with the following credentials username:test_user, password:test_pass",
+        "LOGIN_VALID_CRED": "Test with valid credentials",
+        "LOGIN_INVALID_CRED": "Test with invalid credentials",
+        "LOGOUT": "Test logout"
+    }
+}
