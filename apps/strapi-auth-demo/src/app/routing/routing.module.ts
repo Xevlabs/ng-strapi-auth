@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@ng-strapi-auth/ng-strapi-auth';
-import { RolesEnum } from '../enums/roles.enum';
 import { TestPageComponent } from '../test-page/test-page.component';
 
 const routes: Routes = [
@@ -11,12 +9,6 @@ const routes: Routes = [
     },
     {
         path: '',
-        component: TestPageComponent
-    },
-    {
-        path: 'authenticated',
-        canActivate: [AuthGuard],
-        data: {roles:[RolesEnum.AUTHENTICATED]},
         component: TestPageComponent
     },
     {
