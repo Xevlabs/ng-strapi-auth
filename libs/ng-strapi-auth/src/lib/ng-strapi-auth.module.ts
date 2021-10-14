@@ -1,22 +1,14 @@
 import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthWrapperComponent } from './auth/auth-wrapper/auth-wrapper.component';
-import { LoginWrapperComponent } from './auth/login-wrapper/login-wrapper.component';
 import { HotToastModule, ToastConfig, ToastPosition } from '@ngneat/hot-toast';
 import { AuthOptionModel } from './ng-strapi-auth-options';
-import { CanActivateGuard } from './routing/can-activate.guard';
 import { TranslocoModule } from '@ngneat/transloco';
-import { AuthRoutingModule } from './routing/auth-routing.module';
 import { AuthMaterialModule } from './auth-material/auth-material.module';
 
 
 @NgModule({
-  declarations: [
-    AuthWrapperComponent,
-    LoginWrapperComponent
-  ],
+  declarations: [],
   imports: [
-    AuthRoutingModule,
     CommonModule,
     AuthMaterialModule,
     TranslocoModule,
@@ -26,7 +18,7 @@ import { AuthMaterialModule } from './auth-material/auth-material.module';
       }),
 ],
 exports: [],
-providers: [CanActivateGuard]
+providers: []
 })
 export class NgStrapiAuthModule {
     static forRoot( options?: ModuleOptions ) : ModuleWithProviders<any> {
