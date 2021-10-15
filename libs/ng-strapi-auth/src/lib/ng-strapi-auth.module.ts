@@ -1,6 +1,6 @@
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HotToastModule, ToastConfig, ToastPosition } from '@ngneat/hot-toast';
+import { HotToastModule } from '@ngneat/hot-toast';
 import { AuthOptionModel } from './ng-strapi-auth-options';
 import { TranslocoModule } from '@ngneat/transloco';
 import { AuthMaterialModule } from './auth-material/auth-material.module';
