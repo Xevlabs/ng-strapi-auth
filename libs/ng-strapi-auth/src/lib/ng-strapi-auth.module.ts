@@ -12,10 +12,7 @@ import { AuthMaterialModule } from './auth-material/auth-material.module';
         CommonModule,
         AuthMaterialModule,
         TranslocoModule,
-        HotToastModule.forRoot({
-            className: 'xevlabs-auth-snackbar',
-            reverseOrder: true
-        }),
+        HotToastModule
     ],
     exports: [],
     providers: []
