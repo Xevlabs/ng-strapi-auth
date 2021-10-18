@@ -13,7 +13,7 @@ export class AuthService {
 
     authToken: any;
     authApiBase: string;
-    authUserChanged$: Subject<UserModel | null>;
+    authUserChanged$: Subject<UserModel | null> = new Subject<UserModel | null>();
 
     constructor(
         private httpClient: HttpClient,
@@ -24,7 +24,6 @@ export class AuthService {
         this.getUserFromServer().subscribe((user) => {
             this.authUserChanged$.next(user)
         })
-        this.authUserChanged$ = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_USER) as string));
         if (sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)) {
             this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
         }
