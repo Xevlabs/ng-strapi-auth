@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum, UserModel } from '@ng-strapi-auth/ng-strapi-auth';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 
@@ -21,12 +21,10 @@ export class AuthService {
         public router: Router,
     ) {
         this.authApiBase = this.options.baseAPIPath;
-        this.getUserFromServer().subscribe((user) => {
-            this.authUserChanged$.next(user)
+        this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
+        this.getUserFromServer().pipe(take(1)).subscribe((user) => {
+            this.authUserChanged$.next(this.authToken ? user : null)
         })
-        if (sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)) {
-            this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
-        }
     }
 
     login(username: string, password: string) {

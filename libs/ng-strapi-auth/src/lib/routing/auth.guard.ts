@@ -24,33 +24,37 @@ export class AuthGuard implements CanActivate {
         return this.userService.getCurrentUser().pipe(
             take(1),
             switchMap((user: UserModel | null) => {
-                if (!user && roles?.length) {
+                if (!roles.length) {
+                    return this.router.navigate(redirectionRoute).then(() => {
+                        this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.NO_ROLES');
+                        return false;
+                    });
+                }
+                if (!user) {
                     return this.router.navigate(redirectionRoute).then(() => {
                         this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.LOGIN_REQUIRED');
                         return false;
                     });
                 }
-                if (roles!.length) {
-                    if (!roles!.includes(user!.role)) {
-                        return this.router.navigate(redirectionRoute).then(() => {
-                            this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.WRONG_ROLE');
-                            return false;
-                        });
-                    }
+                if (!roles!.includes(user!.role)) {
+                    return this.router.navigate(redirectionRoute).then(() => {
+                        this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.WRONG_ROLE');
+                        return false;
+                    });
+                }
 
-                    if (user!.blocked) {
-                        return this.router.navigate(redirectionRoute).then(() => {
-                            this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.USER_BLOCKED');
-                            return false;
-                        });
-                    }
+                if (user!.blocked) {
+                    return this.router.navigate(redirectionRoute).then(() => {
+                        this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.USER_BLOCKED');
+                        return false;
+                    });
+                }
 
-                    if (!user!.confirmed && this.options.blockIfNotConfirmed) {
-                        return this.router.navigate(redirectionRoute).then(() => {
-                            this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.USER_NOT_CONFIRMED');
-                            return false;
-                        });
-                    }
+                if (!user!.confirmed && this.options.blockIfNotConfirmed) {
+                    return this.router.navigate(redirectionRoute).then(() => {
+                        this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.USER_NOT_CONFIRMED');
+                        return false;
+                    });
                 }
                 return this.router.navigate(['']).then(() => {
                     this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.NOT_AUTHORIZED');
