@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SnackBarService, SnackBarTypeEnum } from '@ng-strapi-auth/ng-strapi-auth';
 
 @Component({
   selector: 'ng-strapi-auth-test-page',
@@ -18,7 +17,6 @@ export class TestPageComponent {
     constructor(
         private httpClient: HttpClient,
         public router: Router,
-        private readonly snackBarService: SnackBarService
     ) { }
 
     get currentJwt() {
@@ -34,11 +32,9 @@ export class TestPageComponent {
                     sessionStorage.setItem('currentJwt', response.jwt);
                     this.userData = response.user;
                     this.authToken = sessionStorage.getItem('currentJwt');
-                    this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.LOGIN_SUCCESS')
-                } 
+                }
                 this.busy = false;
             }, (err: HttpErrorResponse) => {
-                this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, err.error.data[0].messages[0].id.toUpperCase())
                 this.busy = false;
             });
 
@@ -47,6 +43,5 @@ export class TestPageComponent {
     logout() {
         sessionStorage.removeItem('currentUser');
         sessionStorage.removeItem('currentJwt');
-        this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.LOGOUT_SUCCESS')
     }
 }
