@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TestPageComponent } from '../test-page/test-page.component';
 import { AuthGuard } from '@ng-strapi-auth/ng-strapi-auth';
-import { testRoles } from '../core/roles';
+import { authenticatedRole, publicRole, testRoles } from '../core/roles';
 
 const routes: Routes = [
     {
@@ -22,13 +22,13 @@ const routes: Routes = [
     {
         path: 'authenticated',
         canActivate: [AuthGuard],
-        data: {roles:[testRoles[0]]},
+        data: {roles:[authenticatedRole]},
         component: TestPageComponent
     },
     {
         path: 'public',
         canActivate: [AuthGuard],
-        data: {roles:[testRoles[1]]},
+        data: {roles:[publicRole]},
         component: TestPageComponent
     },
     {
