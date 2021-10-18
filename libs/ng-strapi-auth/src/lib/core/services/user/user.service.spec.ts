@@ -31,23 +31,20 @@ describe('UserService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should have a user after authenticating', (done) => {
+    it('should return list of users if permitted', (done) => {
         expect.assertions(1);
-        authService.login(testCredentials.username, testCredentials.password).subscribe((user: UserModel) => {
-            service.getCurrentUser().subscribe((currentUser: UserModel) => {
-                expect(currentUser).toEqual(user);
+        authService.login(testCredentials.username, testCredentials.password).subscribe(() => {
+            service.getUsersList().subscribe((users: UserModel[]) => {
+                expect(users.length).toBeGreaterThan(0)
                 done();
-            });
-        }
-        );
+            })
+        });
     });
 
-    it('should have a user after authenticating', (done) => {
+    it('should throw error if not authenticated', (done) => {
         expect.assertions(1);
-        authService.logout()
-        service.getCurrentUser().subscribe((currentUser: UserModel) => {
-            expect(currentUser).toBeNull();
-            done();
-        });
+        authService.logout();
+        expect(service.getUsersList).toThrowError();
+        done();
     });
 });
