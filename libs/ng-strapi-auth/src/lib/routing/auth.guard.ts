@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { UserModel } from '../core/models';
+import { UserModel, RoleModel } from '../core/models';
 import { UserService } from '../core/services/user/user.service';
 import { AuthOptionModel } from '../ng-strapi-auth-options';
 import { SnackBarService } from '@ng-xevlabs-utils-snackbar';
@@ -22,7 +22,9 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         let roles = this.options.roleList;
         let redirectionRoute: string[] = ['authentication', 'login'];
-
+        if (route.data.roles) {
+            roles = route.data.roles as Array<RoleModel>
+        }
         return this.userService.getCurrentUser().pipe(
             take(1),
             map((user: UserModel) => {
