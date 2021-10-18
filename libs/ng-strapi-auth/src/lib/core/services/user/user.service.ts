@@ -1,10 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs';
-import { UserModel } from '../../models';
-import { AuthOptionModel } from '../../../ng-strapi-auth-options';
+import { UserModel, DefaultUserModel } from '../../models';
 import { LocalStorageKeyEnum } from '../../enums';
 
 @Injectable({
@@ -12,15 +10,10 @@ import { LocalStorageKeyEnum } from '../../enums';
 })
 export class UserService {
 
-    private authApiBase: string;
-
     constructor(
-        @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
-        private httpClient: HttpClient,
         public authService: AuthService,
     ) {
-        this.authApiBase = this.options.baseAPIPath
-        this.authService.authStateChanged$.subscribe((user) => {
+        this.authService.authUserChanged$.subscribe((user) => {
             if (user) {
                 this.setUser(user)
             } else {
@@ -37,16 +30,10 @@ export class UserService {
         sessionStorage.removeItem(LocalStorageKeyEnum.CURRENT_USER);
     }
 
-    getCurrentUser(): Observable<UserModel> {
-        return this.httpClient.get<any>(`${this.authApiBase}/users/me`,
-            {
-                headers: {
-                    Authorization: `Bearer ${this.authService.authToken}`,
-                }
-            })
-            .pipe(map(response => {
-                return response;
-            }));
+    getCurrentUser<T = DefaultUserModel>(): Observable<UserModel<T | DefaultUserModel> | null> {
+        return this.authService.authUserChanged$.pipe(map((user) => {
+            return user
+        }))
     }
 
 }

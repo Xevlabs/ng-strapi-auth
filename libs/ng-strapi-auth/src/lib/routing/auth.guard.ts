@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
         let roles = route.data.roles as Array<RoleModel>
         return this.userService.getCurrentUser().pipe(
             take(1),
-            switchMap((user: UserModel) => {
+            switchMap((user: UserModel | null) => {
                 if (!user && roles?.length) {
                     return this.router.navigate(redirectionRoute).then(() => {
                         this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.LOGIN_REQUIRED');
@@ -31,21 +31,21 @@ export class AuthGuard implements CanActivate {
                     });
                 }
                 if (roles!.length) {
-                    if (!roles!.includes(user.role)) {
+                    if (!roles!.includes(user!.role)) {
                         return this.router.navigate(redirectionRoute).then(() => {
                             this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.WRONG_ROLE');
                             return false;
                         });
                     }
 
-                    if (user.blocked) {
+                    if (user!.blocked) {
                         return this.router.navigate(redirectionRoute).then(() => {
                             this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.USER_BLOCKED');
                             return false;
                         });
                     }
 
-                    if (!user.confirmed && this.options.blockIfNotConfirmed) {
+                    if (!user!.confirmed && this.options.blockIfNotConfirmed) {
                         return this.router.navigate(redirectionRoute).then(() => {
                             this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.USER_NOT_CONFIRMED');
                             return false;
