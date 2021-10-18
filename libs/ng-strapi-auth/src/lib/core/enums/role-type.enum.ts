@@ -1,3 +1,4 @@
 export enum RoleTypeEnum {
-    AUTHENTICATED = 'ATHENTICATED'
+    AUTHENTICATED = 'ATHENTICATED',
+    PUBLIC = 'PUBLIC'
 }

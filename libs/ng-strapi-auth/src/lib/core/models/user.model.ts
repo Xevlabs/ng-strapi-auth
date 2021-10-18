@@ -6,7 +6,7 @@ export interface BaseUserModel {
     username: string;
     confirmed: boolean;
     blocked: boolean;
-    role?: RoleModel;
+    role: RoleModel;
 }
 
 export interface DefaultUserModel {}

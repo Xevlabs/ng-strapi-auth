@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth/auth.service';
+import { AuthOptionModel } from '../../ng-strapi-auth-options';
 
 @Component({
     selector: 'ng-strapi-auth-login-wrapper',
@@ -17,11 +18,15 @@ export class LoginWrapperComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private snackBarService: SnackBarService,
         private authService: AuthService,
         private router: Router,
-        @Inject('StrapiAuthLibOptions') private readonly options: StrapiAuthLibOptions
-    ) { }
+        @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel
+    ) {
+        this.loginForm = this.formBuilder.group({
+            username: ['', Validators.required],
+            password: ['', Validators.required]
+        });
+    }
 
     get username(): string {
         return this.loginForm.get('username')?.value as string;
@@ -36,13 +41,9 @@ export class LoginWrapperComponent implements OnInit {
         if (this.authService.currentUser) {
             this.authService.logout();
         }
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
 
         this.appName = this.options.appName;
-        this.subtitle = this.options.subtitle;
+        this.subtitle = this.options.subtitle ? this.options.subtitle : '';
     }
 
     login() {
@@ -51,11 +52,9 @@ export class LoginWrapperComponent implements OnInit {
             .subscribe(() => {
                 this.busy = false;
                 this.router.navigate(['/'])
-            },
-                error => {
-                    this.busy = false;
-                    this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.' + error.code?.toUpperCase());
-                });
+            }, () => {
+                this.busy = false;
+            });
     }
 
 }
