@@ -1,1 +1,4 @@
-<p>test-page works!</p>
+<h1 class="text-center no-margin-top condensed-font">{{ 'TEST_PAGE.TITLE' | transloco }}</h1>
+<p *ngIf="user">{{'TEST_PAGE.IS_LOGGED_IN_AS' | transloco}}{{' ' + user.username}}</p>
+<p *ngIf="!user">{{'TEST_PAGE.NO_USER' | transloco}}</p>
+<h2>{{'TEST_PAGE.' + message | transloco}}</h2>
