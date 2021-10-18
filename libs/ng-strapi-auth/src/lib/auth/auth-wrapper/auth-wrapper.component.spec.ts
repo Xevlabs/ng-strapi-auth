@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginWrapperComponent } from '../login-wrapper/login-wrapper.component';
-
 import { AuthWrapperComponent } from './auth-wrapper.component';
+import { AuthMaterialModule } from '../../auth-material/auth-material.module';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 
 describe('AuthWrapperComponent', () => {
     let component: AuthWrapperComponent;
