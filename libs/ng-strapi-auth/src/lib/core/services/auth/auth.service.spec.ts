@@ -40,7 +40,7 @@ describe('AuthService', () => {
     it('should logout user', (done) => {
         expect.assertions(2);
         service.logout()
-        expect(service.currentUser$.value).toBeNull()
+        expect(service.authToken).toBeNull()
         expect(service.isLoggedIn).toBeFalsy()
         done();
     });

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LocalStorageKeyEnum } from '@ng-strapi-auth/ng-strapi-auth';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { AuthOptionModel } from '../../ng-strapi-auth-options';
 
@@ -38,7 +39,7 @@ export class LoginWrapperComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.authService.currentUser) {
+        if (sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)) {
             this.authService.logout();
         }
 

@@ -1,7 +1,7 @@
 import { RoleModel } from "./role.model";
 
 export interface BaseUserModel {
-    id: string;
+    id: number;
     email: string;
     username: string;
     confirmed: boolean;
