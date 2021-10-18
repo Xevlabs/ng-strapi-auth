@@ -1,0 +1,3 @@
+[submodule "libs/xevlabs-ng-utils"]
+	path = libs/xevlabs-ng-utils
+	url = git@github.com:Xevlabs/xevlabs-ng-utils.git
