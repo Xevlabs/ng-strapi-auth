@@ -1,32 +1,32 @@
 <mat-card class="full-width" fxLayout="row" fxLayoutAlign="space-between center">
     <div fxLayout="row" fxLayoutGap="1rem">
-        <button mat-flat-button color="warn" [disabled]="busy" (click)="goToNotLogged()">
+        <button mat-flat-button color="warn" (click)="goToNotLogged()">
             <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
                 <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_NOT_LOGGED' | transloco }}</span>
             </span>
         </button>
-        <button mat-flat-button color="warn" [disabled]="busy" (click)="goToAnyRole()">
+        <button mat-flat-button color="warn" (click)="goToAnyRole()">
             <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
                 <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_ANY_ROLE' | transloco }}</span>
             </span>
         </button>
-        <button mat-flat-button color="warn" [disabled]="busy" (click)="goToAuthenticatedOnly()">
+        <button mat-flat-button color="warn" (click)="goToAuthenticatedOnly()">
             <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
                 <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_ADMIN_ONLY' | transloco }}</span>
             </span>
         </button>
-        <button mat-flat-button color="warn" [disabled]="busy" (click)="goToPublicOnly()">
+        <button mat-flat-button color="warn" (click)="goToPublicOnly()">
             <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
                 <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_USER_ONLY' | transloco }}</span>
             </span>
         </button>
     </div>
-    <button *ngIf="user" mat-flat-button color="warn" [disabled]="busy" (click)="logOut()">
+    <button *ngIf="user" mat-flat-button color="warn" (click)="logOut()">
         <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
             <span class="white uppercase bold ">{{ 'AUTH.LOGOUT' | transloco }}</span>
         </span>
     </button>
-    <button *ngIf="!user" mat-flat-button color="accent" [disabled]="busy" (click)="goToLogin()">
+    <button *ngIf="!user" mat-flat-button color="accent" (click)="goToLogin()">
         <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
             <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_LOGIN' | transloco }}</span>
         </span>

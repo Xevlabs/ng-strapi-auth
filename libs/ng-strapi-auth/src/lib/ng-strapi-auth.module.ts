@@ -34,7 +34,7 @@ export class NgStrapiAuthModule {
             ngModule: NgStrapiAuthModule,
             providers: [
                 {
-                    provide: 'StrapiAuthLipOptions',
+                    provide: 'StrapiAuthLibOptions',
                     useValue: options
                 },
             ]

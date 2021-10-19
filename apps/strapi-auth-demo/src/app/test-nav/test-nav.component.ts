@@ -8,18 +8,13 @@ import { AuthService, UserModel, UserService } from '@ng-strapi-auth/ng-strapi-a
   styleUrls: ['./test-nav.component.scss']
 })
 export class TestNavComponent implements OnInit {
-    busy = true;
-    user: UserModel | null;
+    user: any;
 
     constructor(private userService: UserService, private authService: AuthService,  private router: Router) {
-        this.user = null;
     }
 
     ngOnInit(): void {
-        this.userService.getCurrentUser<UserModel>().subscribe((user: UserModel | null) => {
-            this.user = user;
-            this.busy = false
-        });
+        this.user = this.userService.getCurrentUser<UserModel>();
     }
 
     logOut() {

@@ -10,8 +10,7 @@ import { authenticatedRole, publicRole, testRoles } from '../core/roles';
     styleUrls: ['./test-page.component.scss']
 })
 export class TestPageComponent implements OnInit {
-    busy = true;
-    user: UserModel | null;
+    user: any;
     message: string = '';
 
     constructor(
@@ -19,14 +18,11 @@ export class TestPageComponent implements OnInit {
         private userService: UserService,
         private route: ActivatedRoute
     ) {
-        this.user = null;
+        this.user = this.userService.getCurrentUser<UserModel>()
     }
 
     ngOnInit(): void {
-        this.userService.getCurrentUser<UserModel>().subscribe((user: UserModel | null) => {
-            this.user = user;
-            this.busy = false
-        });
+        
         let roles = this.route.snapshot.data.roles as Array<RoleModel>
         if (!roles) {
             this.message = 'NOT_LOGGED';

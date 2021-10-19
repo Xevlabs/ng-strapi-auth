@@ -1,0 +1,26 @@
+{
+    "TEST_PAGE": {
+        "TITLE": "Page de test",
+        "IS_LOGGED_IN_AS": "est connecté en tant que:",
+        "NO_USER": "Vous n'êtes pas connecté.",
+        "NOT_LOGGED": "N'importe-qui peut accéder à cette page, même sans être connecté.",
+        "ADMIN": "Seuls les administrateurs ont accès à cette page.",
+        "USER": "Seuls les utilisateurs ont accès à cette page.",
+        "ANY_ROLE": "Les utilisateurs et les administrateurs ont accès à cette page."
+    },
+    "TEST_NAV": {
+        "GOTO_NOT_LOGGED": "Page sans connection nécessaire",
+        "GOTO_ANY_ROLE": "Page avec connection nécessaire",
+        "GOTO_ADMIN_ONLY": "Page réservée aux admins",
+        "GOTO_USER_ONLY": "Page réservée aux utilisateurs",
+        "GOTO_LOGIN": "Connexion"
+    },
+    "AUTH": {
+        "GUARD": {
+            "LOGIN_REQUIRED": "Vous devez être connecté pour accéder à cette page",
+            "NOT_AUTHORIZED": "Vos droits ne vous autorisent pas l'accès à cette page",
+            "MAX_DEVICES_REACHED": "Vous avez déjà atteint votre maximum d'appareils et ceci n'est pas l'un d'entre eux"
+        },
+        "LOGOUT": "Déconnexion"
+    }
+}

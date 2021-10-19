@@ -1,0 +1,26 @@
+{
+    "TEST_PAGE": {
+        "TITLE": "Test page",
+        "IS_LOGGED_IN_AS": "is logged in as:",
+        "NO_USER": "You are not logged in.",
+        "NOT_LOGGED": "Anyone can access this page, even without logging in.",
+        "ADMIN": "Only administrators can access this page.",
+        "USER": "Only users can access this page.",
+        "ANY_ROLE": "Both users and administrators can access this page."
+    },
+    "TEST_NAV": {
+        "GOTO_NOT_LOGGED": "No login necessary page",
+        "GOTO_ANY_ROLE": "Logged in only page",
+        "GOTO_ADMIN_ONLY": "Admin only page",
+        "GOTO_USER_ONLY": "User only page",
+        "GOTO_LOGIN": "Login"
+    },
+    "AUTH": {
+        "GUARD": {
+            "LOGIN_REQUIRED": "You need to be logged in to access this page",
+            "NOT_AUTHORIZED": "Your credentials do not allow you access to this page",
+            "MAX_DEVICES_REACHED": "You have already reached your maximum authorized devices and this is not one of them"
+        },
+        "LOGOUT": "Logout"
+    }
+}
