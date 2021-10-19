@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { from, Observable, of } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
-import { UserModel, RoleModel } from '../core/models';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { RoleModel } from '../core/models';
 import { UserService } from '../core/services/user/user.service';
 import { SnackBarService } from '@ng-xevlabs-utils-snackbar';
 import { SnackBarTypeEnum } from 'libs/xevlabs-ng-utils/libs/xevlabs-snackbar/src/lib/enums';
