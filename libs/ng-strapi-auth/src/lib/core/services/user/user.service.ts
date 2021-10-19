@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
-import { Observable } from 'rxjs';
 import { UserModel, DefaultUserModel } from '../../models';
 import { LocalStorageKeyEnum } from '../../enums';
 
