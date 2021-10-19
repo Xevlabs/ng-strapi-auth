@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TestPageComponent } from '../test-page/test-page.component';
 import { AuthGuard } from '@ng-strapi-auth/ng-strapi-auth';
 import { authenticatedRole, publicRole, testRoles } from '../core/roles';
+import { TestNavComponent } from '../test-nav/test-nav.component';
 
 const routes: Routes = [
     {
@@ -11,6 +12,10 @@ const routes: Routes = [
     },
     {
         path: '',
+        component: TestNavComponent
+    },
+    {
+        path: 'noLogin',
         component: TestPageComponent
     },
     {

@@ -26,7 +26,7 @@ export class TestNavComponent implements OnInit {
     }
 
     goToNotLogged() {
-        this.router.navigate(['']);
+        this.router.navigate(['noLogin']);
     }
 
     goToAnyRole() {

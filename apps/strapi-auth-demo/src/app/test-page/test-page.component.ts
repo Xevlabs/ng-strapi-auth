@@ -11,7 +11,7 @@ import { authenticatedRole, publicRole, testRoles } from '../core/roles';
 })
 export class TestPageComponent implements OnInit {
     user: any;
-    message: string = '';
+    message: any;
 
     constructor(
         private authService: AuthService,
@@ -22,17 +22,16 @@ export class TestPageComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        
         let roles = this.route.snapshot.data.roles as Array<RoleModel>
         if (!roles) {
             this.message = 'NOT_LOGGED';
         } else if (roles == testRoles) {
             this.message = 'ANY_ROLE';
         } else {
-            if (roles == [authenticatedRole]) {
+            if (roles[0].id == authenticatedRole.id) {
                 this.message = 'AUTHENTICATED';
             }
-            if (roles == [publicRole]) {
+            if (roles[0].id == publicRole.id) {
                 this.message = 'PUBLIC';
             }
         }
