@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
-import { Observable } from 'rxjs';
 import { UserModel, DefaultUserModel } from '../../models';
 import { LocalStorageKeyEnum } from '../../enums';
 
@@ -30,10 +28,8 @@ export class UserService {
         sessionStorage.removeItem(LocalStorageKeyEnum.CURRENT_USER);
     }
 
-    getCurrentUser<T = DefaultUserModel>(): Observable<UserModel<T | DefaultUserModel> | null> {
-        return this.authService.authUserChanged$.pipe(map((user) => {
-            return user
-        }))
+    getCurrentUser<T = DefaultUserModel>() {
+        return JSON.parse(sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_USER)!) as UserModel<T>
     }
 
 }
