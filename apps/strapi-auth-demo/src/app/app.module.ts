@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco/transloco-root.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AuthGuard, NgStrapiAuthModule } from '@ng-strapi-auth/ng-strapi-auth';
+import { AuthGuard, AuthMaterialModule, NgStrapiAuthModule } from '@ng-strapi-auth/ng-strapi-auth';
 import { testRoles } from './core/roles';
 
 @NgModule({
@@ -22,6 +22,7 @@ import { testRoles } from './core/roles';
         BrowserModule,
         RoutingModule,
         BrowserAnimationsModule,
+        AuthMaterialModule,
         HttpClientModule,
         TranslocoRootModule,
         FlexLayoutModule,

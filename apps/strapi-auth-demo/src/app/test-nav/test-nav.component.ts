@@ -21,24 +21,4 @@ export class TestNavComponent implements OnInit {
         this.authService.logout();
     }
 
-    goToLogin() {
-        this.router.navigate(['authentication/login']);
-    }
-
-    goToNotLogged() {
-        this.router.navigate(['noLogin']);
-    }
-
-    goToAnyRole() {
-        this.router.navigate(['anyRole']);
-    }
-
-    goToAuthenticatedOnly() {
-        this.router.navigate(['authenticated']);
-    }
-
-    goToPublicOnly() {
-        this.router.navigate(['public']);
-    }
-
 }
