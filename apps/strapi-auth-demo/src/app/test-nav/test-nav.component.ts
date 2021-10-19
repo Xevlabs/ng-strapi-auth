@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService, UserModel, UserService } from '@ng-strapi-auth/ng-strapi-auth';
 
 @Component({
   selector: 'ng-strapi-auth-test-nav',
@@ -6,21 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test-nav.component.scss']
 })
 export class TestNavComponent implements OnInit {
-    busy = false;
-    user: UserModel;
+    busy = true;
+    user: UserModel | null;
 
-    constructor(private userService: UserService, private router: Router) {
+    constructor(private userService: UserService, private authService: AuthService,  private router: Router) {
+        this.user = null;
     }
 
     ngOnInit(): void {
         this.userService.getCurrentUser<UserModel>().subscribe((user: UserModel | null) => {
             this.user = user;
+            this.busy = false
         });
     }
 
     logOut() {
-        this.busy = true;
-        this.userService.signOut().then(() => this.busy = false);
+        this.authService.logout();
     }
 
     goToLogin() {
@@ -35,12 +38,12 @@ export class TestNavComponent implements OnInit {
         this.router.navigate(['anyRole']);
     }
 
-    goToAdminOnly() {
-        this.router.navigate(['admin']);
+    goToAuthenticatedOnly() {
+        this.router.navigate(['authenticated']);
     }
 
-    goToUserOnly() {
-        this.router.navigate(['user']);
+    goToPublicOnly() {
+        this.router.navigate(['public']);
     }
 
 }
