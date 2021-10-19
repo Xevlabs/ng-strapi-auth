@@ -6,14 +6,23 @@ import { AuthMaterialModule } from './auth-material/auth-material.module';
 import { AuthRoutingModule } from './routing/auth-routing.module';
 import { AuthWrapperComponent } from './auth/auth-wrapper/auth-wrapper.component';
 import { LoginWrapperComponent } from './auth/login-wrapper/login-wrapper.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 @NgModule({
     declarations: [AuthWrapperComponent, LoginWrapperComponent],
     imports: [
         CommonModule,
+        ReactiveFormsModule,
+        FlexLayoutModule,
         AuthRoutingModule,
         AuthMaterialModule,
         TranslocoModule,
+        HotToastModule.forRoot({
+            className: 'xevlabs-auth-snackbar',
+            position: 'bottom-center'
+          }),
     ],
     exports: [],
     providers: []
