@@ -1,0 +1,34 @@
+<mat-card class="full-width" fxLayoutGap="1rem" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="space-between center">
+    <div fxLayout="column" fxLayoutGap="1rem">
+        <a mat-flat-button color="primary" [routerLink]="'noLogin'">
+            <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+                <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_NOT_LOGGED' | transloco }}</span>
+            </span>
+        </a>
+        <a mat-flat-button color="primary" [routerLink]="'anyRole'">
+            <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+                <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_ANY_ROLE' | transloco }}</span>
+            </span>
+        </a>
+        <a mat-flat-button color="primary" [routerLink]="'authenticated'">
+            <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+                <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_AUTHENTICATED_ONLY' | transloco }}</span>
+            </span>
+        </a>
+        <a mat-flat-button color="primary" [routerLink]="'public'">
+            <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+                <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_PUBLIC_ONLY' | transloco }}</span>
+            </span>
+        </a>
+    </div>
+    <button *ngIf="user" mat-flat-button color="warn" (click)="logOut()">
+        <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+            <span class="white uppercase bold ">{{ 'AUTH.LOGOUT' | transloco }}</span>
+        </span>
+    </button>
+    <a *ngIf="!user" mat-flat-button color="accent" [routerLink]="'authentication/login'">
+        <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+            <span class="white uppercase bold ">{{ 'TEST_NAV.GOTO_LOGIN' | transloco }}</span>
+        </span>
+    </a>
+</mat-card>
