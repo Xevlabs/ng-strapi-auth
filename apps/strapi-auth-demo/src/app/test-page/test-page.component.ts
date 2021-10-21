@@ -1,8 +1,6 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService, RoleModel, UserModel, UserService } from '@ng-strapi-auth/ng-strapi-auth';
-import { authenticatedRole, publicRole, testRoles } from '../core/roles';
+import { AuthService, RoleTypeEnum, UserModel, UserService } from '@ng-strapi-auth/ng-strapi-auth';
 
 @Component({
     selector: 'ng-strapi-auth-test-page',
@@ -22,16 +20,16 @@ export class TestPageComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let roles = this.route.snapshot.data.roles as Array<RoleModel>
+        let roles = this.route.snapshot.data.roles as Array<string>
         if (!roles) {
             this.message = 'NOT_LOGGED';
-        } else if (roles == testRoles) {
+        } else if (roles.includes(RoleTypeEnum.AUTHENTICATED) && roles.includes(RoleTypeEnum.PUBLIC)) {
             this.message = 'ANY_ROLE';
         } else {
-            if (roles[0].id == authenticatedRole.id) {
+            if (roles.includes(RoleTypeEnum.AUTHENTICATED)) {
                 this.message = 'AUTHENTICATED';
             }
-            if (roles[0].id == publicRole.id) {
+            if (roles.includes(RoleTypeEnum.PUBLIC)) {
                 this.message = 'PUBLIC';
             }
         }

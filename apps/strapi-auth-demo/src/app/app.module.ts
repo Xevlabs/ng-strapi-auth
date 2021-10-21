@@ -9,8 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslocoRootModule } from './transloco/transloco-root.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AuthGuard, AuthMaterialModule, NgStrapiAuthModule } from '@ng-strapi-auth/ng-strapi-auth';
-import { testRoles } from './core/roles';
+import { AuthGuard, AuthMaterialModule, NgStrapiAuthModule, RoleTypeEnum } from '@ng-strapi-auth/ng-strapi-auth';
 
 @NgModule({
     declarations: [
@@ -29,7 +28,7 @@ import { testRoles } from './core/roles';
         NgStrapiAuthModule.forRoot({
             appName:'NgStrapiAuthLibDemo',
             baseAPIPath:'http://localhost:1337',
-            roleList: testRoles,
+            roleList: [RoleTypeEnum.PUBLIC, RoleTypeEnum.AUTHENTICATED],
             blockIfNotConfirmed: true
         })
     ],
