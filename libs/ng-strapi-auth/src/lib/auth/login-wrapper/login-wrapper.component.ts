@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LocalStorageKeyEnum } from '@ng-strapi-auth/ng-strapi-auth';
+import { LocalStorageKeyEnum } from '../../core/enums';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { AuthOptionModel } from '../../ng-strapi-auth-options';
 

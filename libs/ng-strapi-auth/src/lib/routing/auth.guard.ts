@@ -2,12 +2,10 @@ import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RoleModel } from '../core/models';
 import { UserService } from '../core/services/user/user.service';
-import { SnackBarService } from '@ng-xevlabs-utils-snackbar';
-import { SnackBarTypeEnum } from 'libs/xevlabs-ng-utils/libs/xevlabs-snackbar/src/lib/enums';
+import { SnackBarTypeEnum, SnackBarService } from '../../../../xevlabs-ng-utils/libs/xevlabs-snackbar/src/index';
 import { AuthOptionModel } from '../ng-strapi-auth-options';
-import { AuthService } from '@ng-strapi-auth/ng-strapi-auth';
+import { AuthService } from '../core/services';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

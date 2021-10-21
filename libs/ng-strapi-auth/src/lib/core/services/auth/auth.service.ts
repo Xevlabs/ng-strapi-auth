@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
-import { LocalStorageKeyEnum, UserModel } from '@ng-strapi-auth/ng-strapi-auth';
+import { LocalStorageKeyEnum } from '../../enums';
+import { UserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 
 @Injectable({
