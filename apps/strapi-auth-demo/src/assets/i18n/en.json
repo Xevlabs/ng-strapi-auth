@@ -1,0 +1,36 @@
+{
+  "TEST_PAGE": {
+    "TITLE": "Test page",
+    "IS_LOGGED_IN_AS": "Logged in as:",
+    "NO_USER": "You are not logged in.",
+    "NOT_LOGGED": "Anyone can access this page, even without logging in.",
+    "AUTHENTICATED": "Only authenticated users can access this page.",
+    "PUBLIC": "Only public users can access this page.",
+    "ANY_ROLE": "Both public and authenticated users can access this page."
+  },
+  "TEST_NAV": {
+    "GOTO_NOT_LOGGED": "No login necessary page",
+    "GOTO_ANY_ROLE": "Logged in only page",
+    "GOTO_AUTHENTICATED_ONLY": "Authenticated only page",
+    "GOTO_PUBLIC_ONLY": "Public only page",
+    "GOTO_LOGIN": "Login"
+  },
+  "AUTH": {
+    "GUARD": {
+      "LOGIN_REQUIRED": "You need to be logged in to access this page",
+      "NOT_AUTHORIZED": "Your credentials do not allow you access to this page",
+      "WRONG_ROLE": "Wrong role"
+    },
+    "LOGIN": {
+      "WELCOME": "Welcome to the {{value}} app",
+      "CTA": "Login"
+    },
+    "LOGOUT": "Logout",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "ERRORS": {
+      "USERNAME_REQUIRED": "Username required.",
+      "PASSWORD_REQUIRED": "Password required."
+    }
+  }
+}

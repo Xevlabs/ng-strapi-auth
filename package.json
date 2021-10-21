@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^12.2.0",
     "@angular/router": "^12.2.0",
     "@ngneat/hot-toast": "^3.4.1",
+    "@ngneat/overview": "^2.0.4",
     "@ngneat/spectator": "^8.1.0",
     "@nrwl/angular": "12.10.0",
     "rxjs": "~6.6.0",
