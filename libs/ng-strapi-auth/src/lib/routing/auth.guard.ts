@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserService } from '../core/services/user/user.service';
-import { SnackBarTypeEnum, SnackBarService } from '../../../../xevlabs-ng-utils/libs/xevlabs-snackbar/src/index';
+import { SnackBarTypeEnum, SnackBarService } from '@@xevlabs-ng-utils/ng-snackbar';
 import { AuthOptionModel } from '../ng-strapi-auth-options';
 import { AuthService } from '../core/services';
 
