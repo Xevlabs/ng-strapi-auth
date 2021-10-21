@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         let redirectionRoute: string[] = ['authentication', 'login'];
-        let roles = route.data.roles as Array<RoleModel>
+        let roles = route.data.roles as Array<string>
         let user = this.userService.getCurrentUser()
                 if (!roles.length) {
                     return of(this.router.navigate(redirectionRoute)).pipe(map(() => {
@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate {
                         return false;
                     }));
                 }
-                if (!roles!.filter(role => role.id === user!.role.id).length) {
+                if (!roles!.includes(user!.role.type)) {
                         this.snackBarService.showSnackBar(SnackBarTypeEnum.ERROR, 'AUTH.GUARD.WRONG_ROLE');
                         return of(false);
                 }
