@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@ng-strapi-auth/ng-strapi-auth": ["libs/ng-strapi-auth/src/index.ts"],
-      "@ng-xevlabs-utils-snackbar": ["libs/xevlabs-ng-utils/libs/xevlabs-snackbar/src/index.ts"],
+      "@xevlabs-ng-utils/ng-snackbar": ["libs/xevlabs-ng-utils/libs/xevlabs-snackbar/src/index.ts"],
       "@ng-strapi-error-handling": ["libs/xevlabs-ng-utils/libs/xevlabs-strapi-error-handling/src/index.ts"]
     }
   },
