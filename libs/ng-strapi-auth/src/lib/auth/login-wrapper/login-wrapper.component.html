@@ -2,7 +2,7 @@
     <h1 *ngIf="appName">{{'AUTH.LOGIN.WELCOME' | transloco: { value: appName } }}</h1>
     <h4 *ngIf="subtitle">{{'AUTH.LOGIN.SUBTITLE' | transloco: { value: subtitle } }}</h4>
     <form role="form" class="full-width" [formGroup]="loginForm" (ngSubmit)="login()" fxLayoutGap="2rem"  fxLayout="column" fxLayoutAlign="center center">
-        <div>
+        <div fxLayout="column" fxLayoutAlign="center center">
             <mat-form-field class="full-width input-field" appearance="outline">
                 <mat-label>{{ 'AUTH.USERNAME' | transloco }}</mat-label>
                 <input matInput placeholder="{{ 'AUTH.USERNAME' | transloco }}" formControlName="username"/>
