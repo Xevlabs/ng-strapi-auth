@@ -10,9 +10,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { PassForgottenComponent } from './auth/pass-forgotten/pass-forgotten.component';
+import { PassResetComponent } from './auth/pass-reset/pass-reset.component';
+import { ConfirmPasswordValidatorDirective } from './core/custom-validators/confirm-password-validator.directive';
 
 @NgModule({
-    declarations: [AuthWrapperComponent, LoginWrapperComponent, PassForgottenComponent],
+    declarations: [
+        AuthWrapperComponent,
+        LoginWrapperComponent,
+        PassForgottenComponent,
+        PassResetComponent,
+        ConfirmPasswordValidatorDirective
+    ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -23,7 +31,7 @@ import { PassForgottenComponent } from './auth/pass-forgotten/pass-forgotten.com
         HotToastModule.forRoot({
             className: 'xevlabs-auth-snackbar',
             position: 'bottom-center'
-          }),
+        }),
     ],
     exports: [],
     providers: []

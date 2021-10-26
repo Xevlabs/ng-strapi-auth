@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthWrapperComponent } from '../auth/auth-wrapper/auth-wrapper.component';
 import { LoginWrapperComponent } from '../auth/login-wrapper/login-wrapper.component';
 import { PassForgottenComponent } from '../auth/pass-forgotten/pass-forgotten.component';
+import { PassResetComponent } from '../auth/pass-reset/pass-reset.component';
 
 const routes: Routes = [
     {
@@ -16,6 +17,10 @@ const routes: Routes = [
             {
                 path: 'forgot-password',
                 component: PassForgottenComponent
+            },
+            {
+                path: 'reset-password',
+                component: PassResetComponent
             },
             {
                 path: '**',

@@ -1,0 +1,37 @@
+<section class="reset-password">
+    <h1 class="text-center no-margin-top condensed-font">{{ 'AUTH.PASSRESET.TITLE' | transloco }}</h1>
+    <form class="full-width" (ngSubmit)="passReset()" [formGroup]="passResetForm" fxLayout="column"
+          fxLayoutAlign="center center">
+        <p class="no-margin">{{'AUTH.PASSRESET.MESSAGE' | transloco}}</p>
+        <mat-form-field class="full-width input-field" appearance="outline">
+            <mat-label>{{ 'AUTH.NEW_PASSWORD' | transloco }}</mat-label>
+            <input matInput type="password" placeholder="{{ 'AUTH.NEW_PASSWORD' | transloco }}" formControlName="password"/>
+            <mat-error *ngIf="passResetForm.controls.password.touched && passResetForm.controls.password.hasError('required')">
+                {{ 'AUTH.ERRORS.PASSWORD_REQUIRED' | transloco }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width input-field" appearance="outline">
+            <mat-label>{{ 'AUTH.NEW_PASSWORD_CONFIRM' | transloco }}</mat-label>
+            <input matInput type="password" placeholder="{{ 'AUTH.NEW_PASSWORD_CONFIRM' | transloco }}" formControlName="passwordConfirmation"/>
+            <mat-error *ngIf="passResetForm.controls.passwordConfirmation.touched && passResetForm.controls.passwordConfirmation.hasError('required')">
+                {{ 'AUTH.ERRORS.PASSWORD_REQUIRED' | transloco }}
+            </mat-error>
+            <mat-error *ngIf="passResetForm.controls.passwordConfirmation.touched && passResetForm.controls.passwordConfirmation.hasError('notEqual')">
+                {{ 'AUTH.ERRORS.PASSWORD_EQUAL' | transloco }}
+            </mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="1rem">
+            <a mat-flat-button class="login-button full-width" type="button" [routerLink]="'../'">
+                <span class="padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+                    <span class="uppercase bold ">{{ 'AUTH.PASSRESET.CANCEL' | transloco }}</span>
+                </span>
+            </a>
+            <button mat-flat-button color="primary" class="login-button full-width" type="submit" [disabled]="passResetForm.invalid || busy">
+                <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
+                    <mat-spinner class="white margin-large-right" diameter="24" *ngIf="busy"></mat-spinner>
+                    <span class="white uppercase bold ">{{ 'AUTH.PASSRESET.VALIDATE' | transloco }}</span>
+                </span>
+            </button>
+        </div>
+    </form>
+</section>

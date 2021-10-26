@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
-import { UserModel } from '../../models';
+import { UserModel, PassResetModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 
 @Injectable({
@@ -70,6 +70,10 @@ export class AuthService {
             .pipe(map(response => {
                 return response;
             }));
+    }
+
+    resetPassword(passReset: PassResetModel) {
+        return this.httpClient.post<any>(`${this.authApiBase}/auth/reset-password`, passReset);
     }
 
 }
