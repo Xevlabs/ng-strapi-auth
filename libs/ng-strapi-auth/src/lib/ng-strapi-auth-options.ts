@@ -1,5 +1,3 @@
-import { RoleModel } from "./core/models";
-
 export interface AuthOptionModel {
     appName: string;
     baseAPIPath: string;
