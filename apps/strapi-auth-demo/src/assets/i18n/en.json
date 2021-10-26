@@ -36,8 +36,10 @@
     },
     "LOGOUT": "Logout",
     "USERNAME": "Username",
+    "EMAIL": "Email",
     "PASSWORD": "Password",
     "ERRORS": {
+      "EMAIL_REQUIRED": "Email required.",
       "USERNAME_REQUIRED": "Username required.",
       "PASSWORD_REQUIRED": "Password required."
     }

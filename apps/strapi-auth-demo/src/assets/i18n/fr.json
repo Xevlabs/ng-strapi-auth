@@ -36,8 +36,10 @@
     },
     "LOGOUT": "Déconnexion",
     "USERNAME": "Le nom d'utilisateur est",
+    "EMAIL": "Email",
     "PASSWORD": "Mot de passe",
     "ERRORS": {
+      "EMAIL_REQUIRED": "Email requis.",
       "USERNAME_REQUIRED": "Nom d'utilisateur requis.",
       "PASSWORD_REQUIRED": "Le mot de passe est requis."
     }
