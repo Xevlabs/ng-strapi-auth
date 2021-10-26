@@ -4,15 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services';
 import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
 import { take } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'ng-strapi-auth-pass-forgotten',
-  templateUrl: './pass-forgotten.component.html',
-  styleUrls: ['./pass-forgotten.component.scss']
+    selector: 'ng-strapi-auth-pass-forgotten',
+    templateUrl: './forgotten-password.component.html',
+    styleUrls: ['./forgotten-password.component.scss']
 })
-export class PassForgottenComponent {
+export class ForgottenPasswordComponent {
 
-    passResetForm: FormGroup;
+    forgottenPasswordForm: FormGroup;
     busy = false;
 
     constructor(
@@ -22,28 +23,28 @@ export class PassForgottenComponent {
         private route: ActivatedRoute,
         private router: Router
     ) {
-        this.passResetForm = this.formBuilder.group({
+        this.forgottenPasswordForm = this.formBuilder.group({
             email: ['', [
                 Validators.required,
                 Validators.email]]
         });
     }
 
-    passReset(): void {
+    askPasswordResetCode(): void {
         this.busy = true;
-        this.authService.forgotPassword(this.passResetForm.get('email')!.value).pipe(take(1)).subscribe(() => {
-            this.afterPassReset();
+        this.authService.forgotPassword(this.forgottenPasswordForm.get('email')!.value).pipe(take(1)).subscribe((data: boolean) => {
+            console.log(data)
+            this.onPasswordResetSuccess();
+        }, (error: HttpErrorResponse) => {
+            this.busy = false;
+            throw error;
         })
     }
 
-    afterPassReset(): void {
+    onPasswordResetSuccess(): void {
         this.busy = false;
         this.router.navigate(['../'], { relativeTo: this.route });
         this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.PASSRESET.CONFIRMATION_MESSAGE');
-    }
-
-    cancel(): void {
-        this.router.navigate(['../'], { relativeTo: this.route });
     }
 
 }
