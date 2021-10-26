@@ -1,6 +1,6 @@
 <section class="reset-password">
     <h1 class="text-center no-margin-top condensed-font">{{ 'AUTH.PASSRESET.TITLE' | transloco }}</h1>
-    <form class="full-width" (ngSubmit)="passReset()" [formGroup]="passResetForm" fxLayout="column"
+    <form class="full-width" (ngSubmit)="resetPassword()" [formGroup]="passResetForm" fxLayout="column"
           fxLayoutAlign="center center">
         <p class="no-margin">{{'AUTH.PASSRESET.MESSAGE' | transloco}}</p>
         <mat-form-field class="full-width input-field" appearance="outline">
@@ -11,8 +11,8 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width input-field" appearance="outline">
-            <mat-label>{{ 'AUTH.NEW_PASSWORD_CONFIRM' | transloco }}</mat-label>
-            <input matInput type="password" placeholder="{{ 'AUTH.NEW_PASSWORD_CONFIRM' | transloco }}" formControlName="passwordConfirmation"/>
+            <mat-label>{{ 'AUTH.CONFIRM_PASSWORD' | transloco }}</mat-label>
+            <input matInput type="password" placeholder="{{ 'AUTH.CONFIRM_PASSWORD' | transloco }}" formControlName="passwordConfirmation"/>
             <mat-error *ngIf="passResetForm.controls.passwordConfirmation.touched && passResetForm.controls.passwordConfirmation.hasError('required')">
                 {{ 'AUTH.ERRORS.PASSWORD_REQUIRED' | transloco }}
             </mat-error>

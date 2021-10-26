@@ -32,17 +32,21 @@
       "VALIDATE": "Validate",
       "CANCEL": "Cancel",
       "FORGOTTEN": "Password forgotten?",
-      "CONFIRMATION_MESSAGE": "A password reset e-mail will be sent to the typed address soon."
+      "CONFIRMATION_MESSAGE": "A password reset e-mail will be sent to the typed address soon.",
+      "SUCCESS": "Password successfully reset"
     },
     "LOGOUT": "Logout",
     "USERNAME": "Username",
     "EMAIL": "Email",
     "PASSWORD": "Password",
+    "NEW_PASSWORD": "New password",
+    "CONFIRM_PASSWORD": "Confirm password",
     "FORGOT_PASSWORD": "Forgot password",
     "ERRORS": {
       "EMAIL_REQUIRED": "Email required.",
       "USERNAME_REQUIRED": "Username required.",
-      "PASSWORD_REQUIRED": "Password required."
+      "PASSWORD_REQUIRED": "Password required.",
+      "PASSWORD_EQUAL": "Password does not match."
     }
   }
 }

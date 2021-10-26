@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services';
 import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
-import { switchMap, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { confirmPasswordValidatorFn } from '../../core/custom-validators/confirm-password-validator.directive';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'ng-strapi-auth-pass-reset',
-  templateUrl: './pass-reset.component.html',
-  styleUrls: ['./pass-reset.component.scss']
+    selector: 'ng-strapi-auth-pass-reset',
+    templateUrl: './pass-reset.component.html',
+    styleUrls: ['./pass-reset.component.scss']
 })
 export class PassResetComponent {
 
@@ -24,29 +25,32 @@ export class PassResetComponent {
         private router: Router
     ) {
         this.passResetForm = this.formBuilder.group({
-            code: this.route.snapshot.paramMap.get('code'),
+            code: this.route.snapshot.queryParamMap.get('code'),
             password: ['', [Validators.required]],
             passwordConfirmation: ['', [Validators.required, confirmPasswordValidatorFn]]
         });
     }
 
-    passReset(): void {
+    resetPassword(): void {
         this.busy = true;
         const passResetInformation = {
             code: this.passResetForm.get('code')?.value,
             password: this.passResetForm.get('password')?.value,
             passwordConfirmation: this.passResetForm.get('passwordConfirmation')?.value
         }
-        
-        this.authService.resetPassword(passResetInformation).pipe(take(1)).subscribe(() => {
-            this.afterPassReset();
+        this.authService.resetPassword(passResetInformation).pipe(take(1)).subscribe((data) => {
+            console.log(data)
+            this.onPasswordResetSuccess();
+        }, (error: HttpErrorResponse) => {
+            this.busy = false
+            throw error
         })
     }
 
-    afterPassReset(): void {
+    onPasswordResetSuccess(): void {
         this.busy = false;
         this.router.navigate(['../'], { relativeTo: this.route });
-        this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.PASSRESET.CONFIRMATION_MESSAGE');
+        this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.PASSRESET.SUCCESS');
     }
 
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { RoutingModule } from './routing/routing.module';
 import { TestNavComponent } from './test-nav/test-nav.component';
@@ -28,6 +27,7 @@ import { AuthGuard, AuthMaterialModule, NgStrapiAuthModule, RoleTypeEnum } from 
         NgStrapiAuthModule.forRoot({
             appName:'NgStrapiAuthLibDemo',
             baseAPIPath:'http://localhost:1337',
+            baseServerUrl: 'http://localhost:4200',
             roleList: [RoleTypeEnum.PUBLIC, RoleTypeEnum.AUTHENTICATED],
             blockIfNotConfirmed: true,
             enableResetPassword: true
