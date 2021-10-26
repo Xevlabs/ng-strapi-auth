@@ -9,10 +9,10 @@ import { LoginWrapperComponent } from './auth/login-wrapper/login-wrapper.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HotToastModule } from '@ngneat/hot-toast';
-import { PassResetComponent } from './auth/pass-reset/pass-reset.component';
+import { PassForgottenComponent } from './auth/pass-forgotten/pass-forgotten.component';
 
 @NgModule({
-    declarations: [AuthWrapperComponent, LoginWrapperComponent, PassResetComponent],
+    declarations: [AuthWrapperComponent, LoginWrapperComponent, PassForgottenComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,

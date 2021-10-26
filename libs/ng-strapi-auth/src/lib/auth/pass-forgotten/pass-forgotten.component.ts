@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services';
 import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
-import { HttpErrorResponse } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 
 @Component({
-  selector: 'ng-strapi-auth-pass-reset',
-  templateUrl: './pass-reset.component.html',
-  styleUrls: ['./pass-reset.component.scss']
+  selector: 'ng-strapi-auth-pass-forgotten',
+  templateUrl: './pass-forgotten.component.html',
+  styleUrls: ['./pass-forgotten.component.scss']
 })
-export class PassResetComponent {
+export class PassForgottenComponent {
 
     passResetForm: FormGroup;
     busy = false;

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthWrapperComponent } from '../auth/auth-wrapper/auth-wrapper.component';
 import { LoginWrapperComponent } from '../auth/login-wrapper/login-wrapper.component';
-import { PassResetComponent } from '../auth/pass-reset/pass-reset.component';
+import { PassForgottenComponent } from '../auth/pass-forgotten/pass-forgotten.component';
 
 const routes: Routes = [
     {
@@ -15,7 +15,7 @@ const routes: Routes = [
             },
             {
                 path: 'forgot-password',
-                component: PassResetComponent
+                component: PassForgottenComponent
             },
             {
                 path: '**',
