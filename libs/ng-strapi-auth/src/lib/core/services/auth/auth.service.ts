@@ -65,7 +65,7 @@ export class AuthService {
     }
 
     forgotPassword(email: string) {
-        let url = `${this.authApiBase}/admin/plugins/users-permissions/auth/reset-password`
+        let url = `${this.authApiBase}/authentication/request-password`
         return this.httpClient.post<any>(`${this.authApiBase}/auth/forgot-password`, { email: email, url: url })
             .pipe(map(response => {
                 return response;
