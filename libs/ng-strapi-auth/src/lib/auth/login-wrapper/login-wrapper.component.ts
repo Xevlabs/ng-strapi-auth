@@ -16,6 +16,7 @@ export class LoginWrapperComponent implements OnInit {
     public busy = false;
     public appName: string = '';
     public subtitle: string = '';
+    public passwordResetEnabled: boolean;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -27,6 +28,7 @@ export class LoginWrapperComponent implements OnInit {
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
+        this.passwordResetEnabled = this.options.enableResetPassword!;
     }
 
     get username(): string {

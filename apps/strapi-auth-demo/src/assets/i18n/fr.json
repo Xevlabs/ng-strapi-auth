@@ -25,6 +25,15 @@
       "WELCOME": "Bienvenue sur l'application {{value}}",
       "CTA": "Login"
     },
+    "PASSRESET": {
+        "TITLE": "Demande de nouveau mot de passe",
+        "MESSAGE": "Entrez l'email lié à votre compte et cliquez sur valider pour recevoir un email de changement de mot de passe.",
+        "WARNING": "L'email peut mettre un peu de temps avant d'être reçu.",
+        "VALIDATE": "Valider",
+        "CANCEL": "Annuler",
+        "FORGOTTEN": "Mot de passe oublié ?",
+        "CONFIRMATION_MESSAGE": "Un email de changement de mot de passe sera envoyé à l'adresse saisie prochainement."
+    },
     "LOGOUT": "Déconnexion",
     "USERNAME": "Le nom d'utilisateur est",
     "PASSWORD": "Mot de passe",

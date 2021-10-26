@@ -29,7 +29,8 @@ import { AuthGuard, AuthMaterialModule, NgStrapiAuthModule, RoleTypeEnum } from 
             appName:'NgStrapiAuthLibDemo',
             baseAPIPath:'http://localhost:1337',
             roleList: [RoleTypeEnum.PUBLIC, RoleTypeEnum.AUTHENTICATED],
-            blockIfNotConfirmed: true
+            blockIfNotConfirmed: true,
+            enableResetPassword: true
         })
     ],
     providers: [AuthGuard],
