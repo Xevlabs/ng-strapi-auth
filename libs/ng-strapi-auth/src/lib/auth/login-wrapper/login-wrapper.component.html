@@ -21,7 +21,7 @@
                 </mat-error>
             </mat-form-field>
             <button mat-flat-button color="primary" class="login-button full-width" [disabled]="loginForm.invalid || busy">
-                <span class="white padding-base" fxLayout="row" fxLayoutAlign="center center">
+                <span class="button-content" fxLayout="row" fxLayoutAlign="center center">
                     <mat-spinner class="white margin-large-right" diameter="24" *ngIf="busy"></mat-spinner>
                     <span class="white uppercase bold ">{{ 'AUTH.LOGIN.CTA' | transloco }}</span>
                 </span>
