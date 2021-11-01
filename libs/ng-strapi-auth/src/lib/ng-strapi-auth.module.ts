@@ -9,12 +9,20 @@ import { LoginWrapperComponent } from './auth/login-wrapper/login-wrapper.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { PassResetComponent } from './auth/pass-reset/pass-reset.component';
+import { ConfirmPasswordValidatorDirective } from './core/custom-validators/confirm-password-validator.directive';
 import { ForgottenPasswordComponent } from './auth/forgotten-password/forgotten-password.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpAuthInterceptor } from './core/interceptor/http.auth-interceptor';
 
 @NgModule({
-    declarations: [AuthWrapperComponent, LoginWrapperComponent, ForgottenPasswordComponent],
+    declarations: [
+        AuthWrapperComponent,
+        LoginWrapperComponent,
+        ForgottenPasswordComponent,
+        PassResetComponent,
+        ConfirmPasswordValidatorDirective
+    ],
     imports: [
         CommonModule,
         ReactiveFormsModule,

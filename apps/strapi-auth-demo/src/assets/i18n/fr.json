@@ -32,17 +32,21 @@
       "VALIDATE": "Valider",
       "CANCEL": "Annuler",
       "FORGOTTEN": "Mot de passe oublié ?",
-      "CONFIRMATION_MESSAGE": "Un email de changement de mot de passe sera envoyé à l'adresse saisie prochainement."
+      "CONFIRMATION_MESSAGE": "Un email de changement de mot de passe sera envoyé à l'adresse saisie prochainement.",
+      "SUCCESS": "Votre mot de passe a été réinitialisé avec succès."
     },
     "LOGOUT": "Déconnexion",
     "USERNAME": "Le nom d'utilisateur est",
     "EMAIL": "Email",
     "PASSWORD": "Mot de passe",
+    "NEW_PASSWORD": "Nouveau mot de passe",
+    "CONFIRM_PASSWORD": "Retapez le mot de passe",
     "FORGOT_PASSWORD": "Mot de passe oublié",
     "ERRORS": {
       "EMAIL_REQUIRED": "Email requis.",
       "USERNAME_REQUIRED": "Nom d'utilisateur requis.",
-      "PASSWORD_REQUIRED": "Le mot de passe est requis."
+      "PASSWORD_REQUIRED": "Le mot de passe est requis.",
+      "PASSWORD_EQUAL": "Les mot de passe ne sont pas identiques"
     }
   }
 }

@@ -32,15 +32,15 @@ export class ForgottenPasswordComponent {
 
     askPasswordResetCode(): void {
         this.busy = true;
-        this.authService.forgotPassword(this.forgottenPasswordForm.get('email')!.value).pipe(take(1)).subscribe((data: boolean) => {
-            this.onPasswordResetSuccess();
+        this.authService.forgotPassword(this.forgottenPasswordForm.get('email')!.value).pipe(take(1)).subscribe(() => {
+            this.onAskPasswordResetSuccess();
         }, (error: HttpErrorResponse) => {
             this.busy = false;
             throw error;
         })
     }
 
-    onPasswordResetSuccess(): void {
+    onAskPasswordResetSuccess(): void {
         this.busy = false;
         this.router.navigate(['../'], { relativeTo: this.route });
         this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.PASSRESET.CONFIRMATION_MESSAGE');
