@@ -33,7 +33,6 @@ export class ForgottenPasswordComponent {
     askPasswordResetCode(): void {
         this.busy = true;
         this.authService.forgotPassword(this.forgottenPasswordForm.get('email')!.value).pipe(take(1)).subscribe((data: boolean) => {
-            console.log(data)
             this.onPasswordResetSuccess();
         }, (error: HttpErrorResponse) => {
             this.busy = false;
