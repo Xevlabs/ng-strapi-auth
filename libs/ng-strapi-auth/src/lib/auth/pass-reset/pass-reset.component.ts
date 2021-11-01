@@ -39,7 +39,6 @@ export class PassResetComponent {
             passwordConfirmation: this.passResetForm.get('passwordConfirmation')?.value
         }
         this.authService.resetPassword(passResetInformation).pipe(take(1)).subscribe((data) => {
-            console.log(data)
             this.onPasswordResetSuccess();
         }, (error: HttpErrorResponse) => {
             this.busy = false
