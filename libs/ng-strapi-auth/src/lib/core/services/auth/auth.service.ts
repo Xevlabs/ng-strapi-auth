@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
@@ -62,6 +62,11 @@ export class AuthService {
             .pipe(map(response => {
                 return response;
             }));
+    }
+
+    forgotPassword(email: string): Observable<boolean> {
+        const url = `${this.authApiBase}/authentication/request-password`
+        return this.httpClient.post<boolean>(`${this.authApiBase}/auth/forgot-password`, { email: email, url: url });
     }
 
 }

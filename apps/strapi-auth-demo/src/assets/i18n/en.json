@@ -25,10 +25,22 @@
       "WELCOME": "Welcome to the {{value}} app",
       "CTA": "Login"
     },
+    "PASSRESET": {
+      "TITLE": "Ask for a new password",
+      "MESSAGE": "Type the email linked to your account and click validate to receive a password reset email.",
+      "WARNING": "The email might take a while to be received. You will not be warned if the email you typed is not an email linked to an existing account (and thus if you typed the wrong email).",
+      "VALIDATE": "Validate",
+      "CANCEL": "Cancel",
+      "FORGOTTEN": "Password forgotten?",
+      "CONFIRMATION_MESSAGE": "A password reset e-mail will be sent to the typed address soon."
+    },
     "LOGOUT": "Logout",
     "USERNAME": "Username",
+    "EMAIL": "Email",
     "PASSWORD": "Password",
+    "FORGOT_PASSWORD": "Forgot password",
     "ERRORS": {
+      "EMAIL_REQUIRED": "Email required.",
       "USERNAME_REQUIRED": "Username required.",
       "PASSWORD_REQUIRED": "Password required."
     }

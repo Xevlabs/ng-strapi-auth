@@ -9,11 +9,12 @@ import { LoginWrapperComponent } from './auth/login-wrapper/login-wrapper.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { ForgottenPasswordComponent } from './auth/forgotten-password/forgotten-password.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpAuthInterceptor } from './core/interceptor/http.auth-interceptor';
 
 @NgModule({
-    declarations: [AuthWrapperComponent, LoginWrapperComponent],
+    declarations: [AuthWrapperComponent, LoginWrapperComponent, ForgottenPasswordComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,

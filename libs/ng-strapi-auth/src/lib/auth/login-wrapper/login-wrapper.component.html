@@ -27,5 +27,10 @@
                 </span>
             </button>
         </div>
+        <div fxLayout="column" *ngIf="passwordResetEnabled">
+            <a class='full-width text-center bold primary' color='primary' [routerLink]="'../forgot-password'">
+                {{'AUTH.FORGOT_PASSWORD' | transloco}}
+            </a>
+        </div>
     </form>
 </section>
