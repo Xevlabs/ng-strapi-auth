@@ -13,6 +13,7 @@ import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 export class AuthService {
 
     authToken: any;
+    allowedRoles: string[]
     authApiBase: string;
     authUserChanged$: Subject<UserModel | null> = new Subject<UserModel | null>();
 
@@ -21,6 +22,7 @@ export class AuthService {
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
         public router: Router,
     ) {
+        this.allowedRoles = this.options.roleList;
         this.authApiBase = this.options.baseAPIPath;
         this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
         if (this.authToken) this.getUserFromServer().pipe(take(1)).subscribe((user) => {
@@ -32,6 +34,13 @@ export class AuthService {
         return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
             .pipe(map(response => {
                 if (response.jwt && response.user && response.user.blocked == false) {
+                    if (!this.allowedRoles.includes(response.user.role.type)) {
+                        throw {
+                            statusCode: 403,
+                            error: "Forbidden",
+                            message: "Forbidden"
+                        }
+                    }
                     sessionStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
                     this.authUserChanged$.next(response.user);
                     this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
