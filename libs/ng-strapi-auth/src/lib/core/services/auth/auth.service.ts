@@ -23,7 +23,7 @@ export class AuthService {
     ) {
         this.authApiBase = this.options.baseAPIPath;
         this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
-        this.getUserFromServer().pipe(take(1)).subscribe((user) => {
+        if (this.authToken) this.getUserFromServer().pipe(take(1)).subscribe((user) => {
             this.authUserChanged$.next(this.authToken ? user : null)
         })
     }

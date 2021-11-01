@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { ForgottenPasswordComponent } from './auth/forgotten-password/forgotten-password.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpAuthInterceptor } from './core/interceptor/http.auth-interceptor';
 
 @NgModule({
     declarations: [AuthWrapperComponent, LoginWrapperComponent, ForgottenPasswordComponent],
@@ -20,13 +22,14 @@ import { ForgottenPasswordComponent } from './auth/forgotten-password/forgotten-
         AuthRoutingModule,
         AuthMaterialModule,
         TranslocoModule,
-        HotToastModule.forRoot({
-            className: 'xevlabs-auth-snackbar',
-            position: 'bottom-center'
-          }),
+        HotToastModule,
     ],
     exports: [],
-    providers: []
+    providers: [        {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpAuthInterceptor,
+      multi: true,
+    },]
 })
 
 export class NgStrapiAuthModule {
