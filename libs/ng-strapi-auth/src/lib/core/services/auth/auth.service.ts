@@ -6,6 +6,7 @@ import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel, PassResetModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
+import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +14,7 @@ import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 export class AuthService {
 
     authToken: any;
+    allowedRoles: string[]
     authApiBase: string;
     baseServerUrl: string;
     authUserChanged$: Subject<UserModel | null> = new Subject<UserModel | null>();
@@ -20,8 +22,10 @@ export class AuthService {
     constructor(
         private httpClient: HttpClient,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
+        private readonly snackbarService: SnackBarService,
         public router: Router,
     ) {
+        this.allowedRoles = this.options.roleList;
         this.authApiBase = this.options.baseAPIPath;
         this.baseServerUrl = this.options.baseServerUrl;
         this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
@@ -34,9 +38,13 @@ export class AuthService {
         return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
             .pipe(map(response => {
                 if (response.jwt && response.user && response.user.blocked == false) {
-                    sessionStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
-                    this.authUserChanged$.next(response.user);
-                    this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
+                    if (this.allowedRoles.includes(response.user.role.type)) {
+                        sessionStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
+                        this.authUserChanged$.next(response.user);
+                        this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
+                    } else {
+                        this.snackbarService.showSnackBar(SnackBarTypeEnum.ERROR, 'Forbidden')
+                    }
                 }
                 return response.user;
             }));
