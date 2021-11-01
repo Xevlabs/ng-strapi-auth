@@ -12,6 +12,8 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { PassResetComponent } from './auth/pass-reset/pass-reset.component';
 import { ConfirmPasswordValidatorDirective } from './core/custom-validators/confirm-password-validator.directive';
 import { ForgottenPasswordComponent } from './auth/forgotten-password/forgotten-password.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpAuthInterceptor } from './core/interceptor/http.auth-interceptor';
 
 @NgModule({
     declarations: [
@@ -28,13 +30,14 @@ import { ForgottenPasswordComponent } from './auth/forgotten-password/forgotten-
         AuthRoutingModule,
         AuthMaterialModule,
         TranslocoModule,
-        HotToastModule.forRoot({
-            className: 'xevlabs-auth-snackbar',
-            position: 'bottom-center'
-        }),
+        HotToastModule,
     ],
     exports: [],
-    providers: []
+    providers: [        {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpAuthInterceptor,
+      multi: true,
+    },]
 })
 
 export class NgStrapiAuthModule {
