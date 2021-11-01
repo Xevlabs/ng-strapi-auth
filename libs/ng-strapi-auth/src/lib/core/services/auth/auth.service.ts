@@ -6,6 +6,7 @@ import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
+import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,7 @@ export class AuthService {
     constructor(
         private httpClient: HttpClient,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
+        private readonly snackbarService: SnackBarService,
         public router: Router,
     ) {
         this.allowedRoles = this.options.roleList;
@@ -34,16 +36,13 @@ export class AuthService {
         return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
             .pipe(map(response => {
                 if (response.jwt && response.user && response.user.blocked == false) {
-                    if (!this.allowedRoles.includes(response.user.role.type)) {
-                        throw {
-                            statusCode: 403,
-                            error: "Forbidden",
-                            message: "Forbidden"
-                        }
+                    if (this.allowedRoles.includes(response.user.role.type)) {
+                        sessionStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
+                        this.authUserChanged$.next(response.user);
+                        this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
+                    } else {
+                        this.snackbarService.showSnackBar(SnackBarTypeEnum.ERROR, 'Forbidden')
                     }
-                    sessionStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
-                    this.authUserChanged$.next(response.user);
-                    this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
                 }
                 return response.user;
             }));
