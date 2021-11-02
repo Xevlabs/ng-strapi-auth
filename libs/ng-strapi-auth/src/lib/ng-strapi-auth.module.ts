@@ -33,11 +33,7 @@ import { HttpAuthInterceptor } from './core/interceptor/http.auth-interceptor';
         HotToastModule,
     ],
     exports: [],
-    providers: [        {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpAuthInterceptor,
-      multi: true,
-    },]
+    providers: []
 })
 
 export class NgStrapiAuthModule {

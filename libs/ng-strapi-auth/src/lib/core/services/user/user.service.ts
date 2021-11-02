@@ -21,15 +21,15 @@ export class UserService {
     }
 
     setUser(user: UserModel) {
-        sessionStorage.setItem(LocalStorageKeyEnum.CURRENT_USER, JSON.stringify(user));
+        localStorage.setItem(LocalStorageKeyEnum.CURRENT_USER, JSON.stringify(user));
     }
 
     removeUser() {
-        sessionStorage.removeItem(LocalStorageKeyEnum.CURRENT_USER);
+      localStorage.removeItem(LocalStorageKeyEnum.CURRENT_USER);
     }
 
     getCurrentUser<T = DefaultUserModel>() {
-        return JSON.parse(sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_USER)!) as UserModel<T>
+        return JSON.parse(localStorage.getItem(LocalStorageKeyEnum.CURRENT_USER)!) as UserModel<T>
     }
 
 }
