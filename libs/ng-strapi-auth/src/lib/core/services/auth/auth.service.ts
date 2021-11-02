@@ -28,7 +28,7 @@ export class AuthService {
         this.allowedRoles = this.options.roleList;
         this.authApiBase = this.options.baseAPIPath;
         this.baseServerUrl = this.options.baseServerUrl;
-        this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
+        this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
         if (this.authToken) this.getUserFromServer().pipe(take(1)).subscribe((user) => {
             this.authUserChanged$.next(this.authToken ? user : null)
         })
@@ -39,9 +39,9 @@ export class AuthService {
             .pipe(map(response => {
                 if (response.jwt && response.user && response.user.blocked == false) {
                     if (this.allowedRoles.includes(response.user.role.type)) {
-                        sessionStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
+                        localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
                         this.authUserChanged$.next(response.user);
-                        this.authToken = sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
+                        this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
                     } else {
                         this.snackbarService.showSnackBar(SnackBarTypeEnum.ERROR, 'Forbidden')
                     }
@@ -52,13 +52,13 @@ export class AuthService {
     }
 
     logout() {
-        sessionStorage.removeItem(LocalStorageKeyEnum.CURRENT_JWT);
+        localStorage.removeItem(LocalStorageKeyEnum.CURRENT_JWT);
         this.authUserChanged$.next(null);
         this.router.navigate(['authentication']);
     }
 
     get isLoggedIn(): boolean {
-        const authToken = JSON.parse(sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!);
+        const authToken = JSON.parse(localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!);
         return authToken !== null;
     }
 

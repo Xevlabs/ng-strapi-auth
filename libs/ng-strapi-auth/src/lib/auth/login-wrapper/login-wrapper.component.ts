@@ -41,7 +41,7 @@ export class LoginWrapperComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (sessionStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)) {
+        if (localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)) {
             this.authService.logout();
         }
 
