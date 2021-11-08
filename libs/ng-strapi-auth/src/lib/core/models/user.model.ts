@@ -1,14 +1,14 @@
-import { RoleModel } from "./role.model";
-
 export interface BaseUserModel {
     id: number;
     email: string;
     username: string;
     confirmed: boolean;
     blocked: boolean;
-    role: RoleModel;
+    role: {
+        [key: string]: string
+    };
 }
 
 export interface DefaultUserModel {}
 
-export type UserModel<T=DefaultUserModel> = T & BaseUserModel;
+export type UserModel<T = DefaultUserModel> = T & BaseUserModel;
