@@ -1,3 +1,5 @@
+import { RouteModel } from "./core/models/route.model";
+
 export interface AuthOptionModel {
     appName: string;
     baseAPIPath: string;
@@ -7,4 +9,5 @@ export interface AuthOptionModel {
     enableResetPassword?: boolean;
     enableRegistration?: boolean;
     subtitle?: string;
+    customRoutes?: RouteModel[];
 }

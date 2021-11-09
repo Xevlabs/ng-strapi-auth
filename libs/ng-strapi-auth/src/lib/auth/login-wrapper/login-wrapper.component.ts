@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageKeyEnum } from '../../core/enums';
+import { RouteModel } from '../../core/models/route.model';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { AuthOptionModel } from '../../ng-strapi-auth-options';
 
@@ -17,6 +18,7 @@ export class LoginWrapperComponent implements OnInit {
     public appName: string = '';
     public subtitle: string = '';
     public passwordResetEnabled: boolean;
+    public customRoutes?: RouteModel[];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -29,6 +31,7 @@ export class LoginWrapperComponent implements OnInit {
             password: ['', Validators.required]
         });
         this.passwordResetEnabled = this.options.enableResetPassword!;
+        this.customRoutes = this.options.customRoutes;
     }
 
     get username(): string {
