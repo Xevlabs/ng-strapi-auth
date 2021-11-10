@@ -27,9 +27,8 @@
                         <span class="white uppercase bold ">{{ 'AUTH.LOGIN.CTA' | transloco }}</span>
                     </span>
                 </button>
-                <a *ngFor="let route of customRoutes" mat-flat-button color="primary" class="login-button full-width" [routerLink]="route.route">
-                    <span class="white uppercase bold ">{{ route.label | transloco}}</span>
-                    
+                <a *ngFor="let route of customRoutes" mat-flat-button [color]="route.buttonColor" class="login-button full-width" [routerLink]="route.route">
+                    <span [class]="route.textColor + ' uppercase bold'">{{ route.label | transloco}}</span>
                 </a>
             </div>
         </div>
