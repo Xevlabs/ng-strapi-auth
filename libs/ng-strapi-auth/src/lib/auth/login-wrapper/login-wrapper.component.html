@@ -20,12 +20,17 @@
                     {{ 'AUTH.ERRORS.PASSWORD_REQUIRED' | transloco }}
                 </mat-error>
             </mat-form-field>
-            <button mat-flat-button color="primary" class="login-button full-width" [disabled]="loginForm.invalid || busy">
-                <span class="button-content" fxLayout="row" fxLayoutAlign="center center">
-                    <mat-spinner class="white margin-large-right" diameter="24" *ngIf="busy"></mat-spinner>
-                    <span class="white uppercase bold ">{{ 'AUTH.LOGIN.CTA' | transloco }}</span>
-                </span>
-            </button>
+            <div fxLayout="column" class="full-width" fxLayoutGap="1rem">
+                <button mat-flat-button color="primary" class="login-button full-width" [disabled]="loginForm.invalid || busy">
+                    <span class="button-content" fxLayout="row" fxLayoutAlign="center center">
+                        <mat-spinner class="white margin-large-right" diameter="24" *ngIf="busy"></mat-spinner>
+                        <span class="white uppercase bold ">{{ 'AUTH.LOGIN.CTA' | transloco }}</span>
+                    </span>
+                </button>
+                <a *ngFor="let route of customRoutes" mat-flat-button [color]="route.buttonColor" class="login-button full-width" [routerLink]="route.route">
+                    <span [ngClass]="route.textColor" class="uppercase bold">{{ route.label | transloco}}</span>
+                </a>
+            </div>
         </div>
         <div fxLayout="column" *ngIf="passwordResetEnabled">
             <a class='full-width text-center bold primary' color='primary' [routerLink]="'../forgot-password'">
