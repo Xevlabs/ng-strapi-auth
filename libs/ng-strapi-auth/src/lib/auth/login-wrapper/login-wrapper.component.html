@@ -28,7 +28,7 @@
                     </span>
                 </button>
                 <a *ngFor="let route of customRoutes" mat-flat-button [color]="route.buttonColor" class="login-button full-width" [routerLink]="route.route">
-                    <span [ngClass]="route.textColor + ' uppercase bold'">{{ route.label | transloco}}</span>
+                    <span [ngClass]="route.textColor" class="uppercase bold">{{ route.label | transloco}}</span>
                 </a>
             </div>
         </div>
