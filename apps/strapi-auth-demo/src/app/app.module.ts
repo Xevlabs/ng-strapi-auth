@@ -27,7 +27,6 @@ import { AuthGuard, AuthMaterialModule, NgStrapiAuthModule, RoleTypeEnum } from 
         NgStrapiAuthModule.forRoot({
             appName:'NgStrapiAuthLibDemo',
             baseAPIPath:'http://localhost:1337',
-            baseServerUrl: 'http://localhost:4200',
             roleList: [RoleTypeEnum.PUBLIC, RoleTypeEnum.AUTHENTICATED],
             blockIfNotConfirmed: true,
             enableResetPassword: true

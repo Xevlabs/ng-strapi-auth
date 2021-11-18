@@ -16,7 +16,6 @@ export class AuthService {
     authToken: any;
     allowedRoles: string[]
     authApiBase: string;
-    baseServerUrl: string;
     authUserChanged$: Subject<UserModel | null> = new Subject<UserModel | null>();
 
     constructor(
@@ -27,7 +26,6 @@ export class AuthService {
     ) {
         this.allowedRoles = this.options.roleList;
         this.authApiBase = this.options.baseAPIPath;
-        this.baseServerUrl = this.options.baseServerUrl;
         this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
         if (this.authToken) this.getUserFromServer().pipe(take(1)).subscribe((user) => {
             this.authUserChanged$.next(this.authToken ? user : null)
@@ -75,8 +73,7 @@ export class AuthService {
     }
 
     forgotPassword(email: string): Observable<boolean> {
-        const url = `${this.baseServerUrl}/authentication/reset-password`
-        return this.httpClient.post<boolean>(`${this.authApiBase}/auth/forgot-password`, { email: email, url: url });
+        return this.httpClient.post<boolean>(`${this.authApiBase}/auth/forgot-password`, { email: email });
     }
 
     resetPassword(passReset: PassResetModel) {
