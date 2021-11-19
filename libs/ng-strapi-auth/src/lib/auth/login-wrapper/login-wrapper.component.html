@@ -1,8 +1,8 @@
 <section class="login">
-    <h1 *ngIf="appName">{{'AUTH.LOGIN.WELCOME' | transloco: { value: appName } }}</h1>
-    <h4 *ngIf="subtitle">{{'AUTH.LOGIN.SUBTITLE' | transloco: { value: subtitle } }}</h4>
+    <h1 *ngIf="appName" class="text-center">{{'AUTH.LOGIN.WELCOME' | transloco: { value: appName } }}</h1>
+    <h4 *ngIf="subtitle" class="text-center">{{'AUTH.LOGIN.SUBTITLE' | transloco: { value: subtitle } }}</h4>
     <form role="form" class="full-width" [formGroup]="loginForm" (ngSubmit)="login()" fxLayoutGap="2rem"  fxLayout="column" fxLayoutAlign="center center">
-        <div fxLayout="column" fxLayoutAlign="center center">
+        <div fxLayout="column" class="full-width"  fxLayoutAlign="center center">
             <mat-form-field class="full-width input-field" appearance="outline">
                 <mat-label>{{ 'AUTH.USERNAME' | transloco }}</mat-label>
                 <input matInput placeholder="{{ 'AUTH.USERNAME' | transloco }}" formControlName="username"/>
@@ -32,7 +32,7 @@
                 </a>
             </div>
         </div>
-        <div fxLayout="column" *ngIf="passwordResetEnabled">
+        <div fxLayout="column" class="full-width" *ngIf="passwordResetEnabled">
             <a class='full-width text-center bold primary' color='primary' [routerLink]="'../forgot-password'">
                 {{'AUTH.FORGOT_PASSWORD' | transloco}}
             </a>
