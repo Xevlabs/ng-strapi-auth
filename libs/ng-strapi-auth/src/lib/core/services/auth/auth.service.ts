@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
-import { UserModel, PassResetModel } from '../../models';
+import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
 
@@ -34,9 +34,9 @@ export class AuthService {
         })
     }
 
-    login(username: string, password: string) {
+    login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
         return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
-            .pipe(map(response => {
+            .pipe(map((response: { jwt: string, user: UserModel<T> }) => {
                 if (response.jwt && response.user && response.user.blocked == false) {
                     if (this.allowedRoles.includes(response.user.role.type)) {
                         localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
@@ -51,6 +51,15 @@ export class AuthService {
 
     }
 
+    loginWithJWT<T = DefaultUserModel>(token: string): Observable<UserModel<T>> {
+        this.authToken = token
+        return this.getUserFromServer().pipe(map((user: UserModel<T>) => {
+            localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, token)
+            this.authUserChanged$.next(user);
+            return user
+        }))
+    }
+
     logout() {
         localStorage.removeItem(LocalStorageKeyEnum.CURRENT_JWT);
         this.authUserChanged$.next(null);
@@ -62,7 +71,7 @@ export class AuthService {
         return authToken !== null;
     }
 
-    private getUserFromServer() {
+    getUserFromServer() {
         return this.httpClient.get<any>(`${this.authApiBase}/users/me`,
             {
                 headers: {
