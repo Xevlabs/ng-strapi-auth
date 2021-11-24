@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs'
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
@@ -13,10 +13,10 @@ import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar
 })
 export class AuthService {
 
-    authToken: any;
+    authToken: string | null;
     allowedRoles: string[]
     authApiBase: string;
-    authUserChanged$: Subject<UserModel | null> = new Subject<UserModel | null>();
+    authUserChanged$: Subject<UserModel | null> = new ReplaySubject<UserModel | null>(0);
 
     constructor(
         private httpClient: HttpClient,
@@ -27,9 +27,13 @@ export class AuthService {
         this.allowedRoles = this.options.roleList;
         this.authApiBase = this.options.baseAPIPath;
         this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
-        if (this.authToken) this.getUserFromServer().pipe(take(1)).subscribe((user) => {
-            this.authUserChanged$.next(this.authToken ? user : null)
-        })
+        if (this.authToken) {
+            this.getUserFromServer().pipe(take(1)).subscribe((user) => {
+                this.authUserChanged$.next(this.authToken ? user : null)
+            })
+        } else {
+            this.authUserChanged$.next(null)
+        }
     }
 
     login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
