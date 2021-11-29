@@ -25,7 +25,7 @@ export class UserService {
     }
 
     removeUser() {
-      localStorage.removeItem(LocalStorageKeyEnum.CURRENT_USER);
+        localStorage.removeItem(LocalStorageKeyEnum.CURRENT_USER);
     }
 
     getCurrentUser<T = DefaultUserModel>() {

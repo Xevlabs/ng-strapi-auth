@@ -44,10 +44,6 @@ export class LoginWrapperComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)) {
-            this.authService.logout();
-        }
-
         this.appName = this.options.appName;
         this.subtitle = this.options.subtitle ? this.options.subtitle : '';
     }
