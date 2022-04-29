@@ -73,6 +73,10 @@ export class AuthService {
         return authToken !== null;
     }
 
+    registerUser<T = DefaultUserModel, Y = any>(clientInformation: T, apiPath: string) {
+        return this.httpClient.post<Y>(apiPath, clientInformation)
+    } 
+
     getUserFromServer() {
         return this.httpClient.get<any>(`${this.authApiBase}/users/me`,
             {
