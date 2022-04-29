@@ -1,6 +1,6 @@
 export interface RouteModel {
     route: string;
     label: string;
-    buttonColor: string;
+    customMessage?: string;
     textColor: string
 }
