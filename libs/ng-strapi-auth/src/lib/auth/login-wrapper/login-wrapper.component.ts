@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LocalStorageKeyEnum } from '../../core/enums';
 import { RouteModel } from '../../core/models/route.model';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { AuthOptionModel } from '../../ng-strapi-auth-options';
@@ -49,14 +48,21 @@ export class LoginWrapperComponent implements OnInit {
     }
 
     login() {
-        this.busy = true;
-        return this.authService.login(this.username, this.password)
-            .subscribe(() => {
-                this.busy = false;
-                this.router.navigate(['/'])
-            }, () => {
-                this.busy = false;
-            });
+        if (!this.loginForm.invalid) {
+            this.busy = true;
+            return this.authService.login(this.username, this.password)
+                .subscribe(() => {
+                    this.busy = false;
+                    this.router.navigate(['/'])
+                }, () => {
+                    this.busy = false;
+                });
+        }
+        else {
+            this.loginForm.markAllAsTouched();
+            return
+        }
+       
     }
 
 }

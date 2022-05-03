@@ -1,41 +1,72 @@
 <section class="login">
-    <h1 *ngIf="appName" class="text-center">{{'AUTH.LOGIN.WELCOME' | transloco: { value: appName } }}</h1>
-    <h4 *ngIf="subtitle" class="text-center">{{'AUTH.LOGIN.SUBTITLE' | transloco: { value: subtitle } }}</h4>
-    <form role="form" class="full-width" [formGroup]="loginForm" (ngSubmit)="login()" fxLayoutGap="2rem"  fxLayout="column" fxLayoutAlign="center center">
-        <div fxLayout="column" class="full-width"  fxLayoutAlign="center center">
-            <mat-form-field class="full-width input-field" appearance="outline">
-                <mat-label>{{ 'AUTH.USERNAME' | transloco }}</mat-label>
-                <input matInput placeholder="{{ 'AUTH.USERNAME' | transloco }}" formControlName="username"/>
-                <mat-error *ngIf="loginForm.controls.username.touched && loginForm.controls.username.hasError('required')">
-                    {{ 'AUTH.ERRORS.USERNAME_REQUIRED' | transloco }}
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="full-width input-field" appearance="outline">
-                <mat-label>{{ 'AUTH.PASSWORD' | transloco }}</mat-label>
-                <input  matInput class="full-width"
-                        placeholder="{{ 'AUTH.PASSWORD' | transloco }}"
-                        type="password"
-                        formControlName="password">
-                <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.hasError('required')">
-                    {{ 'AUTH.ERRORS.PASSWORD_REQUIRED' | transloco }}
-                </mat-error>
-            </mat-form-field>
-            <div fxLayout="column" class="full-width" fxLayoutGap="1rem">
-                <button mat-flat-button color="primary" class="login-button full-width" [disabled]="loginForm.invalid || busy">
-                    <span class="button-content" fxLayout="row" fxLayoutAlign="center center">
-                        <mat-spinner class="white margin-large-right" diameter="24" *ngIf="busy"></mat-spinner>
-                        <span class="white uppercase bold ">{{ 'AUTH.LOGIN.CTA' | transloco }}</span>
-                    </span>
-                </button>
-                <a *ngFor="let route of customRoutes" mat-flat-button [color]="route.buttonColor" class="login-button full-width" [routerLink]="route.route">
-                    <span [ngClass]="route.textColor" class="uppercase bold">{{ route.label | transloco}}</span>
-                </a>
-            </div>
-        </div>
-        <div fxLayout="column" class="full-width" *ngIf="passwordResetEnabled">
-            <a class='full-width text-center bold primary' color='primary' [routerLink]="'../forgot-password'">
-                {{'AUTH.FORGOT_PASSWORD' | transloco}}
+  <h2 *ngIf="appName" class="text-center">{{ 'AUTH.LOGIN.WELCOME' | transloco: { value: appName } }}</h2>
+  <h4 *ngIf="subtitle" class="text-center">{{ 'AUTH.LOGIN.SUBTITLE' | transloco: { value: subtitle } }}</h4>
+  <form
+    role="form"
+    class="full-width"
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    fxLayoutGap="2rem"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <div fxLayout="column" class="full-width" fxLayoutAlign="center center">
+      <mat-form-field
+        class="full-width input-field field-light-grey-background padding-large-horizontal"
+        appearance="outline"
+      >
+        <input
+          matInput
+          placeholder="{{ 'AUTH.USERNAME' | transloco }}"
+          formControlName="username"
+          [placeholder]="'AUTH.USERNAME' | transloco"
+        />
+        <mat-error *ngIf="loginForm.controls.username.touched && loginForm.controls.username.hasError('required')">
+          {{ 'AUTH.ERRORS.USERNAME_REQUIRED' | transloco }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        class="full-width input-field field-light-grey-background padding-large-horizontal"
+        appearance="outline"
+      >
+        <input
+          matInput
+          class="full-width"
+          placeholder="{{ 'AUTH.PASSWORD' | transloco }}"
+          type="password"
+          [placeholder]="'AUTH.PASSWORD' | transloco"
+          formControlName="password"
+        />
+        <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.hasError('required')">
+          {{ 'AUTH.ERRORS.PASSWORD_REQUIRED' | transloco }}
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="full-width margin-medium-bottom"
+        *ngIf="passwordResetEnabled"
+      >
+        <a class="noto-sans-font" [routerLink]="'../forgot-password'">
+          {{ 'AUTH.FORGOT_PASSWORD' | transloco }}
+        </a>
+      </div>
+      <button mat-flat-button color="primary">
+        <span class="button-content" fxLayout="row" fxLayoutAlign="center center">
+          <mat-spinner class="white margin-large-right" diameter="24" *ngIf="busy"></mat-spinner>
+          {{ 'AUTH.LOGIN.CTA' | transloco }}
+        </span>
+      </button>
+      <div fxLayout="column" fxLayoutGap="1rem">
+        <div *ngFor="let route of customRoutes" fxLayoutAlign="center center">
+          <p>
+            {{ route.customMessage | transloco }}
+            <a class="full-width" [routerLink]="route.route">
+              <span class="noto-sans-font" [ngClass]="route.textColor">{{ route.label | transloco }}</span>
             </a>
+          </p>
         </div>
-    </form>
+      </div>
+    </div>
+  </form>
 </section>
