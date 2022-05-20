@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthOptionModel } from '../../ng-strapi-auth-options';
 
 @Component({
   selector: 'ng-strapi-auth-auth-wrapper',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./auth-wrapper.component.scss']
 })
 export class AuthWrapperComponent implements OnInit {
+    hideCard?: boolean
 
-  constructor() { }
+  constructor(@Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel) { }
 
   ngOnInit(): void {
+      if (this.options.hideCard) this.hideCard = this.options.hideCard;
   }
 
 }
