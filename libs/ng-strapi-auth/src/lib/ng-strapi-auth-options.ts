@@ -9,4 +9,5 @@ export interface AuthOptionModel {
     enableRegistration?: boolean;
     subtitle?: string;
     customRoutes?: RouteModel[];
+    hideCard?: boolean;
 }
