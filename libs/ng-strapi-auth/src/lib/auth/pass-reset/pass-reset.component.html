@@ -2,7 +2,7 @@
     <h1 class="text-center no-margin-top condensed-font">{{ 'AUTH.PASSRESET.TITLE' | transloco }}</h1>
     <form class="full-width" (ngSubmit)="resetPassword()" [formGroup]="passResetForm" fxLayout="column"
           fxLayoutAlign="center center">
-        <p class="no-margin text-center padding-large-bottom">{{'AUTH.PASSRESET.MESSAGE' | transloco}}</p>
+        <p class="no-margin text-center padding-large-bottom">{{'AUTH.NEWPASS.MESSAGE' | transloco}}</p>
         <mat-form-field class="full-width input-field" appearance="outline">
             <mat-label>{{ 'AUTH.NEW_PASSWORD' | transloco }}</mat-label>
             <input matInput type="password" placeholder="{{ 'AUTH.NEW_PASSWORD' | transloco }}" formControlName="password"/>
