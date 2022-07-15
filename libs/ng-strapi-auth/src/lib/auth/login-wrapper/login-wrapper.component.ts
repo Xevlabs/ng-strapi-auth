@@ -17,6 +17,7 @@ export class LoginWrapperComponent implements OnInit {
     public appName: string = '';
     public subtitle: string = '';
     public passwordResetEnabled: boolean;
+    public disableDefaultLoader = false
     public customRoutes?: RouteModel[];
 
     constructor(
@@ -30,6 +31,7 @@ export class LoginWrapperComponent implements OnInit {
             password: ['', Validators.required]
         });
         this.passwordResetEnabled = this.options.enableResetPassword!;
+        if (this.options.disableDefaultLoader) this.disableDefaultLoader = this.options.disableDefaultLoader;
         this.customRoutes = this.options.customRoutes;
     }
 
@@ -45,6 +47,11 @@ export class LoginWrapperComponent implements OnInit {
     ngOnInit(): void {
         this.appName = this.options.appName;
         this.subtitle = this.options.subtitle ? this.options.subtitle : '';
+    }
+
+    isLoading() {
+        if (this.busy) return 'loading'
+        return ''
     }
 
     login() {
