@@ -13,7 +13,7 @@ import { AuthOptionModel } from '../../ng-strapi-auth-options';
 export class LoginWrapperComponent implements OnInit {
 
     public loginForm: FormGroup;
-    public busy = true;
+    public busy = false;
     public appName: string = '';
     public subtitle: string = '';
     public passwordResetEnabled: boolean;
