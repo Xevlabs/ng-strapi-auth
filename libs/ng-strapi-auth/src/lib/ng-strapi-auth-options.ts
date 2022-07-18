@@ -10,4 +10,5 @@ export interface AuthOptionModel {
     subtitle?: string;
     customRoutes?: RouteModel[];
     hideCard?: boolean;
+    disableDefaultLoader?: boolean
 }

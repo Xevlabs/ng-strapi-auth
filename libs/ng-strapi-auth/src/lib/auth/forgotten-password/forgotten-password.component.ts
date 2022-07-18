@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services';
 import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
 import { take } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthOptionModel } from '../../ng-strapi-auth-options';
 
 @Component({
     selector: 'ng-strapi-auth-pass-forgotten',
@@ -15,19 +16,22 @@ export class ForgottenPasswordComponent {
 
     forgottenPasswordForm: FormGroup;
     busy = false;
+    public disableDefaultLoader = false
 
     constructor(
         private formBuilder: FormBuilder,
         private snackBarService: SnackBarService,
         private authService: AuthService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel
     ) {
         this.forgottenPasswordForm = this.formBuilder.group({
             email: ['', [
                 Validators.required,
                 Validators.email]]
         });
+        if (this.options.disableDefaultLoader) this.disableDefaultLoader = this.options.disableDefaultLoader;
     }
 
     askPasswordResetCode(): void {
