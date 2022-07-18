@@ -51,7 +51,7 @@
           {{ 'AUTH.FORGOT_PASSWORD' | transloco }}
         </a>
       </div>
-      <button mat-flat-button color="primary" [ngClass]="isLoading()" [disabled]="busy">
+      <button mat-flat-button color="primary" [ngClass]="{loading : busy}" [disabled]="busy">
         <span class="button-content" fxLayout="row" fxLayoutAlign="center center">
           <mat-spinner class="margin-base-right" diameter="24" *ngIf="busy && !disableDefaultLoader"></mat-spinner>
           {{ 'AUTH.LOGIN.CTA' | transloco }}

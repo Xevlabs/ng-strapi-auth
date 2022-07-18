@@ -55,9 +55,4 @@ export class PassResetComponent {
         this.router.navigate(['../'], { relativeTo: this.route });
         this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.PASSRESET.SUCCESS');
     }
-
-    isLoading() {
-        if (this.busy) return 'loading'
-        return ''
-    }
 }

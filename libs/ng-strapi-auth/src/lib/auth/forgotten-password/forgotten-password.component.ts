@@ -44,11 +44,6 @@ export class ForgottenPasswordComponent {
         })
     }
 
-    isLoading() {
-        if (this.busy) return 'loading'
-        return ''
-    }
-
     onAskPasswordResetSuccess(): void {
         this.busy = false;
         this.router.navigate(['../'], { relativeTo: this.route });

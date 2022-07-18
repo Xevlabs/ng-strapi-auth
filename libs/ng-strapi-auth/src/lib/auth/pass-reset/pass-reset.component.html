@@ -21,7 +21,7 @@
             </mat-error>
         </mat-form-field>
         <div fxLayout="column" fxLayoutGap="1rem" class="full-width">
-            <button mat-flat-button color="primary" class="login-button full-width" [ngClass]="isLoading()" type="submit" [disabled]="passResetForm.invalid || busy">
+            <button mat-flat-button color="primary" class="login-button full-width" [ngClass]="{loading : busy}" type="submit" [disabled]="passResetForm.invalid || busy">
                 <span class="white padding-small-vertical" fxLayout="row" fxLayoutAlign="center center">
                     <mat-spinner class="white margin-large-right" diameter="24" *ngIf="busy && !disableDefaultLoader"></mat-spinner>
                     <span class="white uppercase bold ">{{ 'AUTH.PASSRESET.VALIDATE' | transloco }}</span>
