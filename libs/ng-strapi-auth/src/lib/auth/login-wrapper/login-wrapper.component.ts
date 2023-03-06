@@ -56,7 +56,8 @@ export class LoginWrapperComponent implements OnInit {
                 .subscribe(() => {
                     this.busy = false;
                     this.router.navigate(['/'])
-                }, () => {
+                }, (e) => {
+                  console.error(e)
                     this.busy = false;
                 });
         }
@@ -64,7 +65,7 @@ export class LoginWrapperComponent implements OnInit {
             this.loginForm.markAllAsTouched();
             return
         }
-       
+
     }
 
 }

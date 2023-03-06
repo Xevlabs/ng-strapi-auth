@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject, Subject } from 'rxjs'
+import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, take } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
-import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +21,7 @@ export class AuthService {
     constructor(
         private httpClient: HttpClient,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
-        private readonly snackbarService: SnackBarService,
+        private readonly hotToastService: HotToastService,
         public router: Router,
     ) {
         this.allowedRoles = this.options.roleList;
@@ -37,15 +37,20 @@ export class AuthService {
     }
 
     login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
-        return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
+        return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password },
+          {params:{populate:'*'}})
             .pipe(map((response: { jwt: string, user: UserModel<T> }) => {
+              console.log("jwt ==>",response.jwt)
                 if (response.jwt && response.user && response.user.blocked == false) {
-                    if (this.allowedRoles.includes(response.user.role.type)) {
+                  console.log("check users")
+                    if (!this.allowedRoles || this.allowedRoles.includes(response.user.role.type)) {
+                      console.log("included")
                         localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
                         this.authUserChanged$.next(response.user);
                         this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
                     } else {
-                        this.snackbarService.showSnackBar(SnackBarTypeEnum.ERROR, 'Forbidden')
+                      console.log("forbidden")
+                        this.hotToastService.error('Forbidden');
                     }
                 }
                 return response.user;
@@ -75,7 +80,7 @@ export class AuthService {
 
     registerUser<T = DefaultUserModel, Y = any>(clientInformation: T, apiPath: string) {
         return this.httpClient.post<Y>(apiPath, clientInformation)
-    } 
+    }
 
     getUserFromServer() {
         return this.httpClient.get<any>(`${this.authApiBase}/users/me`,

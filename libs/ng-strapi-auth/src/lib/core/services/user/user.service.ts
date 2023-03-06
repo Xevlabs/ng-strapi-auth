@@ -13,6 +13,7 @@ export class UserService {
     ) {
         this.authService.authUserChanged$.subscribe((user) => {
             if (user) {
+              console.log(user)
                 this.setUser(user)
             } else {
                 this.removeUser()
