@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, ReplaySubject, Subject, switchMap } from 'rxjs';
+import { Observable, of, ReplaySubject, Subject, switchMap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
@@ -46,20 +46,20 @@ export class AuthService {
               jwt = data.jwt;
               return this.getUserWithRoles<T>(jwt);
             }
+            throwError("error");
             return of(null);
           }),
           map((user: UserModel<T> | null) => {
             if (user && user.blocked == false) {
               if (this.allowedRoles && !this.allowedRoles.includes(user.role.name)) {
                 this.hotToastService.error('Forbidden');
+                throwError("Forbidden");
               }
 
-              if (!this.allowedRoles || this.allowedRoles.includes(user.role.name)){
-                localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, jwt);
-                this.authUserChanged$.next(user);
-                this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
-                return user;
-              }
+              localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, jwt);
+              this.authUserChanged$.next(user);
+              this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
+              return user;
             }
             return user as UserModel<T>;
           })
