@@ -38,8 +38,7 @@ export class AuthService {
 
     login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
       let response: any;
-      return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password },
-        {params:{populate:'*'}})
+      return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
         .pipe(
           switchMap(res => {
             response = res;
