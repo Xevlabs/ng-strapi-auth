@@ -6,18 +6,18 @@ import { UserService } from '../core/services/user/user.service';
 import { AuthOptionModel } from '../ng-strapi-auth-options';
 import { AuthService } from '../core/services';
 import { HotToastService } from '@ngneat/hot-toast';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private router: Router,
-    public userService: UserService,
-    public authService: AuthService,
-    @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
-    private hotToastService: HotToastService,
-    private translocoService: TranslocoService
+      private router: Router,
+      public userService: UserService,
+      public authService: AuthService,
+      @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
+      private hotToastService: HotToastService,
+      private translocoService: TranslocoService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {

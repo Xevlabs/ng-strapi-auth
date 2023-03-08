@@ -7,6 +7,7 @@ import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 import { HotToastService } from '@ngneat/hot-toast';
+import { AuthResponseModel } from '../../models/auth-response.model';
 
 @Injectable({
     providedIn: 'root'
@@ -37,25 +38,28 @@ export class AuthService {
     }
 
     login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
-      let response: any;
+      let response: AuthResponseModel<T>;
       return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
         .pipe(
-          switchMap(res => {
-            response = res;
-            return this.getRoleOfUser(response.jwt)
+          switchMap(data => {
+            response = data;
+            if (response.jwt) {
+              return this.getRoleOfUser(response.jwt)
+            }
+            return new Observable<any>();
           }),
           map(user => {
-            if (response.jwt && response.user && response.user.blocked == false) {
+            if (user && user.blocked == false) {
               if (!this.allowedRoles || this.allowedRoles.includes(user.role.name) === true){
                 localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
                 this.authUserChanged$.next(user);
                 this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
-                return response.user;
+                return user;
               } else {
                 this.hotToastService.error('Forbidden');
               }
             }
-            return response.user;
+            return user;
           })
         );
     }
