@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, take } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subject, switchMap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
@@ -37,25 +37,38 @@ export class AuthService {
     }
 
     login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
-        return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password },
-          {params:{populate:'*'}})
-            .pipe(map((response: { jwt: string, user: UserModel<T> }) => {
-              console.log("jwt ==>",response.jwt)
-                if (response.jwt && response.user && response.user.blocked == false) {
-                  console.log("check users")
-                    if (!this.allowedRoles || this.allowedRoles.includes(response.user.role.type)) {
-                      console.log("included")
-                        localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
-                        this.authUserChanged$.next(response.user);
-                        this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
-                    } else {
-                      console.log("forbidden")
-                        this.hotToastService.error('Forbidden');
-                    }
-                }
+      let response: any;
+      return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password },
+        {params:{populate:'*'}})
+        .pipe(
+          switchMap(res => {
+            response = res;
+            return this.getRoleOfUser(response.jwt)
+          }),
+          map(user => {
+            if (response.jwt && response.user && response.user.blocked == false) {
+              if (!this.allowedRoles || this.allowedRoles.includes(user.role.name) === true){
+                localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
+                this.authUserChanged$.next(user);
+                this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
                 return response.user;
-            }));
+              } else {
+                this.hotToastService.error('Forbidden');
+              }
+            }
+            return response.user;
+          })
+        );
+    }
 
+
+
+    getRoleOfUser(jwt: string): Observable<any> {
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      });
+
+      return this.httpClient.get(`${this.authApiBase}/users/me?populate=role`, { headers });
     }
 
     loginWithJWT<T = DefaultUserModel>(token: string): Observable<UserModel<T>> {

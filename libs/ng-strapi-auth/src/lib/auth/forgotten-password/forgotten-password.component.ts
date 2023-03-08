@@ -2,10 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services';
-import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
 import { take } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthOptionModel } from '../../ng-strapi-auth-options';
+import { HotToastService } from '@ngneat/hot-toast';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector: 'ng-strapi-auth-pass-forgotten',
@@ -20,10 +21,11 @@ export class ForgottenPasswordComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private snackBarService: SnackBarService,
+        private hotToastService: HotToastService,
         private authService: AuthService,
         private route: ActivatedRoute,
         private router: Router,
+        private translocoService: TranslocoService,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel
     ) {
         this.forgottenPasswordForm = this.formBuilder.group({
@@ -47,7 +49,7 @@ export class ForgottenPasswordComponent {
     onAskPasswordResetSuccess(): void {
         this.busy = false;
         this.router.navigate(['../'], { relativeTo: this.route });
-        this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.PASSRESET.CONFIRMATION_MESSAGE');
+        this.hotToastService.success( this.translocoService.translate('AUTH.PASSRESET.CONFIRMATION_MESSAGE'));
     }
 
 }

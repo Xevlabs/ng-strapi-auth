@@ -41,22 +41,22 @@
           {{ 'AUTH.ERRORS.PASSWORD_REQUIRED' | transloco }}
         </mat-error>
       </mat-form-field>
-      <div
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        class="full-width margin-medium-bottom"
-        *ngIf="passwordResetEnabled"
-      >
-        <a class="noto-sans-font" [routerLink]="'../forgot-password'">
-          {{ 'AUTH.FORGOT_PASSWORD' | transloco }}
-        </a>
-      </div>
       <button mat-flat-button color="primary" [ngClass]="{loading : busy}" [disabled]="busy">
         <span class="button-content" fxLayout="row" fxLayoutAlign="center center">
           <mat-spinner class="margin-base-right" diameter="24" *ngIf="busy && !disableDefaultLoader"></mat-spinner>
           {{ 'AUTH.LOGIN.CTA' | transloco }}
         </span>
       </button>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        class="full-width margin-medium-bottom margin-medium-top"
+        *ngIf="passwordResetEnabled"
+      >
+        <a class="small-text text-color-black" [routerLink]="'../forgot-password'">
+          {{ 'AUTH.FORGOT_PASSWORD' | transloco }}
+        </a>
+      </div>
       <div fxLayout="column" fxLayoutGap="1rem">
         <div *ngFor="let route of customRoutes" fxLayoutAlign="center center">
           <p>
