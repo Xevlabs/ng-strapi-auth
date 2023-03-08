@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { RouteModel } from '../../core/models/route.model';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { AuthOptionModel } from '../../ng-strapi-auth-options';
+import { HotToastService } from '@ngneat/hot-toast';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector: 'ng-strapi-auth-login-wrapper',
@@ -24,6 +26,8 @@ export class LoginWrapperComponent implements OnInit {
         private formBuilder: FormBuilder,
         private authService: AuthService,
         private router: Router,
+        private hotToastService: HotToastService,
+        private translocoService: TranslocoService,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel
     ) {
         this.loginForm = this.formBuilder.group({
@@ -58,6 +62,7 @@ export class LoginWrapperComponent implements OnInit {
                     this.router.navigate(['/'])
                 }, (e) => {
                     console.error(e)
+                    this.hotToastService.error(this.translocoService.translate("AUTH.ERROR.LOGIN"));
                     this.busy = false;
                 });
         }
