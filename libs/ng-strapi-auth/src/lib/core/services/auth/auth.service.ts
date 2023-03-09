@@ -1,13 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, ReplaySubject, Subject, switchMap, throwError } from 'rxjs';
+import { Observable, ReplaySubject, Subject, switchMap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
-import { UserModel, PassResetModel, DefaultUserModel, BaseUserModel } from '../../models';
+import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
 import { HotToastService } from '@ngneat/hot-toast';
 import { AuthResponseModel } from '../../models/auth-response.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +24,7 @@ export class AuthService {
         private httpClient: HttpClient,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
         private readonly hotToastService: HotToastService,
+        private readonly translocoService: TranslocoService,
         public router: Router,
     ) {
         this.allowedRoles = this.options.roleList;
@@ -46,21 +48,27 @@ export class AuthService {
               jwt = data.jwt;
               return this.getUserWithRoles<T>(jwt);
             }
-            throwError("error");
-            return of(null);
+            throw Error(this.translocoService.translate("TOKEN.NOT.EXIST"));
           }),
           map((user: UserModel<T> | null) => {
-            if (user && user.blocked == false) {
-              if (this.allowedRoles && !this.allowedRoles.includes(user.role.name)) {
-                this.hotToastService.error('Forbidden');
-                throwError("Forbidden");
-              }
-
-              localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, jwt);
-              this.authUserChanged$.next(user);
-              this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
-              return user;
+            if (user === null) {
+              this.hotToastService.error(this.translocoService.translate("AUTH.USER.NOT.EXIST"));
+              throw Error(this.translocoService.translate("AUTH.USER.NOT.EXIST"));
             }
+
+            if (user.blocked) {
+              this.hotToastService.error(this.translocoService.translate("AUTH.USER.BLOCKED"));
+              throw Error(this.translocoService.translate("AUTH.USER.BLOCKED"));
+            }
+
+            if (this.allowedRoles && !this.allowedRoles.includes(user.role.name)) {
+              this.hotToastService.error(this.translocoService.translate("AUTH.USER.NOT.ALLOWED"));
+              throw Error(this.translocoService.translate("AUTH.USER.NOT.ALLOWED"));
+            }
+
+            localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, jwt);
+            this.authUserChanged$.next(user);
+            this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
             return user as UserModel<T>;
           })
         );
