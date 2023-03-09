@@ -28,7 +28,7 @@ import { ForgottenPasswordComponent } from './auth/forgotten-password/forgotten-
         AuthRoutingModule,
         AuthMaterialModule,
         TranslocoModule,
-        HotToastModule,
+        HotToastModule.forRoot(),
     ],
     exports: [],
     providers: []

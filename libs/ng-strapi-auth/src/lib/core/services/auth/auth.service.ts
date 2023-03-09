@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject, Subject } from 'rxjs'
-import { HttpClient } from '@angular/common/http';
+import { Observable, ReplaySubject, Subject, switchMap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
-import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
+import { AuthResponseModel } from '../../models/auth-response.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
     constructor(
         private httpClient: HttpClient,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
-        private readonly snackbarService: SnackBarService,
+        private readonly translocoService: TranslocoService,
         public router: Router,
     ) {
         this.allowedRoles = this.options.roleList;
@@ -37,20 +38,45 @@ export class AuthService {
     }
 
     login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
-        return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
-            .pipe(map((response: { jwt: string, user: UserModel<T> }) => {
-                if (response.jwt && response.user && response.user.blocked == false) {
-                    if (this.allowedRoles.includes(response.user.role.type)) {
-                        localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, response.jwt);
-                        this.authUserChanged$.next(response.user);
-                        this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
-                    } else {
-                        this.snackbarService.showSnackBar(SnackBarTypeEnum.ERROR, 'Forbidden')
-                    }
-                }
-                return response.user;
-            }));
+      let jwt: string;
+      return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
+        .pipe(
+          switchMap((data: AuthResponseModel<T>) => {
+            if (data.jwt) {
+              jwt = data.jwt;
+              return this.getUserWithRoles<T>(jwt);
+            }
+            throw Error(this.translocoService.translate("TOKEN.NOT.EXIST"));
+          }),
+          map((user: UserModel<T> | null) => {
+            if (user === null) {
+              throw Error(this.translocoService.translate("AUTH.USER.NOT.EXIST"));
+            }
 
+            if (user.blocked) {
+              throw Error(this.translocoService.translate("AUTH.USER.BLOCKED"));
+            }
+
+            if (this.allowedRoles && !this.allowedRoles.includes(user.role.name)) {
+              throw Error(this.translocoService.translate("AUTH.USER.NOT.ALLOWED"));
+            }
+
+            localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, jwt);
+            this.authUserChanged$.next(user);
+            this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
+            return user as UserModel<T>;
+          })
+        );
+    }
+
+
+
+    getUserWithRoles<T>(jwt: string): Observable<UserModel<T>> {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${jwt}`
+        });
+
+        return this.httpClient.get<UserModel<T>>(`${this.authApiBase}/users/me`, { headers, params: {populate: 'role'} });
     }
 
     loginWithJWT<T = DefaultUserModel>(token: string): Observable<UserModel<T>> {
@@ -75,7 +101,7 @@ export class AuthService {
 
     registerUser<T = DefaultUserModel, Y = any>(clientInformation: T, apiPath: string) {
         return this.httpClient.post<Y>(apiPath, clientInformation)
-    } 
+    }
 
     getUserFromServer() {
         return this.httpClient.get<any>(`${this.authApiBase}/users/me`,
