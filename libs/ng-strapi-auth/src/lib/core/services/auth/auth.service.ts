@@ -6,7 +6,6 @@ import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
 import { AuthOptionModel } from '../../../ng-strapi-auth-options';
-import { HotToastService } from '@ngneat/hot-toast';
 import { AuthResponseModel } from '../../models/auth-response.model';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -23,7 +22,6 @@ export class AuthService {
     constructor(
         private httpClient: HttpClient,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
-        private readonly hotToastService: HotToastService,
         private readonly translocoService: TranslocoService,
         public router: Router,
     ) {
@@ -52,17 +50,14 @@ export class AuthService {
           }),
           map((user: UserModel<T> | null) => {
             if (user === null) {
-              this.hotToastService.error(this.translocoService.translate("AUTH.USER.NOT.EXIST"));
               throw Error(this.translocoService.translate("AUTH.USER.NOT.EXIST"));
             }
 
             if (user.blocked) {
-              this.hotToastService.error(this.translocoService.translate("AUTH.USER.BLOCKED"));
               throw Error(this.translocoService.translate("AUTH.USER.BLOCKED"));
             }
 
             if (this.allowedRoles && !this.allowedRoles.includes(user.role.name)) {
-              this.hotToastService.error(this.translocoService.translate("AUTH.USER.NOT.ALLOWED"));
               throw Error(this.translocoService.translate("AUTH.USER.NOT.ALLOWED"));
             }
 
