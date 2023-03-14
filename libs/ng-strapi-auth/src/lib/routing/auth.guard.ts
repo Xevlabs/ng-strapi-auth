@@ -18,52 +18,61 @@ export class AuthGuard implements CanActivate {
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
         private hotToastService: HotToastService,
         private translocoService: TranslocoService
-    ) {}
+    ) {
+    }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        let redirectionRoute: string[] = ['authentication', 'login'];
-        let roles = route.data.roles as Array<string>
-        let user = this.userService.getCurrentUser()
+        const redirectionRoute: string[] = ['authentication', 'login'];
+        const roles = route.data.roles as Array<string>
+        const user = this.userService.getCurrentUser()
 
         if (!roles.length) {
+            this.authService.logout();
             return of(this.router.navigate(redirectionRoute)).pipe(map(() => {
-              this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.NO_ROLES'));
-              return false;
+                this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.NO_ROLES'));
+                return false;
             }));
         }
 
         if (!user) {
-            return of(this.router.navigate(redirectionRoute)).pipe(map(() => {
-              this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.LOGIN_REQUIRED'));
-              return false;
-            }));
+            return this.translocoService.selectTranslate('AUTH.GUARD.LOGIN_REQUIRED').pipe(
+                map((translation: string) => {
+                    this.authService.logout();
+                    this.hotToastService.error(translation);
+                    this.router.navigate(redirectionRoute);
+                    return false;
+                }
+                )
+            )
         }
 
-        if(!user.role) {
-            this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.WRONG_ROLE'));
+        if (!user.role) {
             this.authService.logout();
+            this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.WRONG_ROLE'));
             return of(false);
         }
 
         if (!roles!.includes(user!.role.name)) {
+            this.authService.logout();
             this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.WRONG_ROLE'));
             return of(false);
         }
 
         if (user!.blocked) {
+            this.authService.logout();
+            this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.USER_BLOCKED'));
             return of(this.router.navigate(redirectionRoute)).pipe(map(() => {
-              this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.USER_BLOCKED'));
-              return false;
+                return false;
             }));
         }
 
         if (!user!.confirmed && this.options.blockIfNotConfirmed) {
+            this.authService.logout();
+            this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.USER_NOT_CONFIRMED'));
             return of(this.router.navigate(redirectionRoute)).pipe(map(() => {
-              this.hotToastService.error(this.translocoService.translate('AUTH.GUARD.USER_NOT_CONFIRMED'));
-              return false;
+                return false;
             }));
         }
-
         return of(true)
     }
 }

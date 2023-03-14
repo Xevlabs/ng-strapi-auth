@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject, switchMap } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs/operators';
 import { LocalStorageKeyEnum } from '../../enums';
 import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
@@ -29,7 +29,7 @@ export class AuthService {
         this.authApiBase = this.options.baseAPIPath;
         this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
         if (this.authToken) {
-            this.getUserFromServer().pipe(take(1)).subscribe((user) => {
+            this.getUserFromServer().subscribe((user) => {
                 this.authUserChanged$.next(this.authToken ? user : null)
             })
         } else {
@@ -38,50 +38,43 @@ export class AuthService {
     }
 
     login<T = DefaultUserModel>(username: string, password: string): Observable<UserModel<T>> {
-      let jwt: string;
-      return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, { identifier: username, password: password })
-        .pipe(
-          switchMap((data: AuthResponseModel<T>) => {
-            if (data.jwt) {
-              jwt = data.jwt;
-              return this.getUserWithRoles<T>(jwt);
-            }
-            throw Error(this.translocoService.translate("TOKEN.NOT.EXIST"));
-          }),
-          map((user: UserModel<T> | null) => {
-            if (user === null) {
-              throw Error(this.translocoService.translate("AUTH.USER.NOT.EXIST"));
-            }
+        let jwt: string;
+        return this.httpClient.post<any>(`${this.authApiBase}/auth/local`, {identifier: username, password: password})
+            .pipe(
+                switchMap((data: AuthResponseModel<T>) => {
+                    if (data.jwt) {
+                        jwt = data.jwt;
+                        return this.getUserFromServer<T>(jwt);
+                    }
+                    throw Error(this.translocoService.translate("TOKEN.NOT.EXIST"));
+                }),
+                map((user: UserModel<T> | null) => {
+                    if (user === null) {
+                        this.authUserChanged$.next(null);
+                        throw Error(this.translocoService.translate("AUTH.USER.NOT.EXIST"));
+                    }
 
-            if (user.blocked) {
-              throw Error(this.translocoService.translate("AUTH.USER.BLOCKED"));
-            }
+                    if (user.blocked) {
+                        this.authUserChanged$.next(null);
+                        throw Error(this.translocoService.translate("AUTH.USER.BLOCKED"));
+                    }
 
-            if (this.allowedRoles && !this.allowedRoles.includes(user.role.name)) {
-              throw Error(this.translocoService.translate("AUTH.USER.NOT.ALLOWED"));
-            }
+                    if (this.allowedRoles && !this.allowedRoles.includes(user.role.name)) {
+                        this.authUserChanged$.next(null);
+                        throw Error(this.translocoService.translate("AUTH.USER.NOT.ALLOWED"));
+                    }
 
-            localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, jwt);
-            this.authUserChanged$.next(user);
-            this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
-            return user as UserModel<T>;
-          })
-        );
-    }
-
-
-
-    getUserWithRoles<T>(jwt: string): Observable<UserModel<T>> {
-        const headers = new HttpHeaders({
-          'Authorization': `Bearer ${jwt}`
-        });
-
-        return this.httpClient.get<UserModel<T>>(`${this.authApiBase}/users/me`, { headers, params: {populate: 'role'} });
+                    localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, jwt);
+                    this.authUserChanged$.next(user);
+                    this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT)!;
+                    return user as UserModel<T>;
+                })
+            );
     }
 
     loginWithJWT<T = DefaultUserModel>(token: string): Observable<UserModel<T>> {
         this.authToken = token
-        return this.getUserFromServer().pipe(map((user: UserModel<T>) => {
+        return this.getUserFromServer<T>().pipe(map((user: UserModel<T>) => {
             localStorage.setItem(LocalStorageKeyEnum.CURRENT_JWT, token)
             this.authUserChanged$.next(user);
             return user
@@ -103,20 +96,18 @@ export class AuthService {
         return this.httpClient.post<Y>(apiPath, clientInformation)
     }
 
-    getUserFromServer() {
-        return this.httpClient.get<any>(`${this.authApiBase}/users/me`,
+    getUserFromServer<T = DefaultUserModel>(jwt?: string) {
+        return this.httpClient.get<UserModel<T>>(`${this.authApiBase}/users/me`,
             {
                 headers: {
-                    Authorization: `Bearer ${this.authToken}`,
-                }
-            })
-            .pipe(map(response => {
-                return response;
-            }));
+                    Authorization: `Bearer ${jwt ? jwt : this.authToken}`,
+                },
+                params: {populate: 'role'}
+            }).pipe(take(1))
     }
 
     forgotPassword(email: string): Observable<boolean> {
-        return this.httpClient.post<boolean>(`${this.authApiBase}/auth/forgot-password`, { email: email });
+        return this.httpClient.post<boolean>(`${this.authApiBase}/auth/forgot-password`, {email: email});
     }
 
     resetPassword(passReset: PassResetModel) {
