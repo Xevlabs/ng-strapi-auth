@@ -12,12 +12,12 @@ import { TranslocoService } from '@ngneat/transloco';
 export class AuthGuard implements CanActivate {
 
     constructor(
-    private router: Router,
-    public userService: UserService,
-    public authService: AuthService,
-    @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
-    private hotToastService: HotToastService,
-    private translocoService: TranslocoService
+        private router: Router,
+        public userService: UserService,
+        public authService: AuthService,
+        @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
+        private hotToastService: HotToastService,
+        private translocoService: TranslocoService
     ) {
     }
 

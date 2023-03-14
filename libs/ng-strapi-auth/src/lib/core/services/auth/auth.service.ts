@@ -20,16 +20,16 @@ export class AuthService {
     authUserChanged$: Subject<UserModel | null> = new ReplaySubject<UserModel | null>(0);
 
     constructor(
-    private httpClient: HttpClient,
-    @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
-    private readonly translocoService: TranslocoService,
-    public router: Router,
+        private httpClient: HttpClient,
+        @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel,
+        private readonly translocoService: TranslocoService,
+        public router: Router,
     ) {
         this.allowedRoles = this.options.roleList;
         this.authApiBase = this.options.baseAPIPath;
         this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
         if (this.authToken) {
-            this.getUserFromServer().pipe(take(1)).subscribe((user) => {
+            this.getUserFromServer().subscribe((user) => {
                 this.authUserChanged$.next(this.authToken ? user : null)
             })
         } else {

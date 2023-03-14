@@ -149,8 +149,7 @@
   },
   "cli": {
     "defaultCollection": "@nrwl/angular",
-    "packageManager": "npm",
-    "analytics": "eec6c16c-a61f-41be-b054-471a4f37dd51"
+    "packageManager": "npm"
   },
   "schematics": {
     "@nrwl/angular": {
