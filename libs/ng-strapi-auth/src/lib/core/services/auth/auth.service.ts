@@ -1,13 +1,13 @@
-import {Inject, Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {Observable, ReplaySubject, Subject, switchMap} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {map, take} from 'rxjs/operators';
-import {LocalStorageKeyEnum} from '../../enums';
-import {UserModel, PassResetModel, DefaultUserModel, BaseUserModel} from '../../models';
-import {AuthOptionModel} from '../../../ng-strapi-auth-options';
-import {AuthResponseModel} from '../../models/auth-response.model';
-import {TranslocoService} from '@ngneat/transloco';
+import { Inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, ReplaySubject, Subject, switchMap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map, take } from 'rxjs/operators';
+import { LocalStorageKeyEnum } from '../../enums';
+import { UserModel, PassResetModel, DefaultUserModel } from '../../models';
+import { AuthOptionModel } from '../../../ng-strapi-auth-options';
+import { AuthResponseModel } from '../../models/auth-response.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
     providedIn: 'root'
