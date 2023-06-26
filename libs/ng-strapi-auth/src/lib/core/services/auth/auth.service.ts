@@ -102,7 +102,7 @@ export class AuthService {
                 headers: {
                     Authorization: `Bearer ${jwt ? jwt : this.authToken}`,
                 },
-                params: {populate: 'role'}
+                params: {populate: '*'}
             }).pipe(take(1))
     }
 

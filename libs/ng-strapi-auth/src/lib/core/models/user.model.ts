@@ -7,6 +7,15 @@ export interface BaseUserModel {
     role: {
         [key: string]: string
     };
+    userGroup?: UserGroupModel
+}
+
+export interface FeaturesModel {
+    [key: string]: boolean
+}
+
+type UserGroupModel = FeaturesModel & {
+    name: string
 }
 
 export interface DefaultUserModel {}
