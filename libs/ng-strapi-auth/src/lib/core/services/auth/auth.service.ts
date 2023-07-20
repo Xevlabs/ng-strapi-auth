@@ -29,8 +29,13 @@ export class AuthService {
         this.authApiBase = this.options.baseAPIPath;
         this.authToken = localStorage.getItem(LocalStorageKeyEnum.CURRENT_JWT);
         if (this.authToken) {
-            this.getUserFromServer().subscribe((user) => {
-                this.authUserChanged$.next(this.authToken ? user : null)
+            this.getUserFromServer().subscribe({ 
+                next: (user) => {
+                    this.authUserChanged$.next(this.authToken ? user : null)
+                }, error: (err) => {
+                    console.error(err)
+                    this.logout()
+                }
             })
         } else {
             this.authUserChanged$.next(null)
