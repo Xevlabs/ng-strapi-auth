@@ -2,11 +2,12 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services';
-import { SnackBarService, SnackBarTypeEnum } from '@xevlabs-ng-utils/ng-snackbar';
 import { take } from 'rxjs/operators';
 import { confirmPasswordValidatorFn } from '../../core/custom-validators/confirm-password-validator.directive';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthOptionModel } from '../../ng-strapi-auth-options';
+import { HotToastService } from "@ngneat/hot-toast";
+import { TranslocoService } from "@ngneat/transloco";
 
 @Component({
     selector: 'ng-strapi-auth-pass-reset',
@@ -21,8 +22,9 @@ export class PassResetComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private snackBarService: SnackBarService,
+        private snackBarService: HotToastService,
         private authService: AuthService,
+        private transloco: TranslocoService,
         private route: ActivatedRoute,
         private router: Router,
         @Inject('StrapiAuthLibOptions') private readonly options: AuthOptionModel
@@ -53,6 +55,6 @@ export class PassResetComponent {
     onPasswordResetSuccess(): void {
         this.busy = false;
         this.router.navigate(['../'], { relativeTo: this.route });
-        this.snackBarService.showSnackBar(SnackBarTypeEnum.SUCCESS, 'AUTH.PASSRESET.SUCCESS');
+        this.snackBarService.success(this.transloco.translate('AUTH.PASSRESET.SUCCESS'), {});
     }
 }
